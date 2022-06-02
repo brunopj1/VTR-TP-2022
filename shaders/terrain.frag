@@ -1,14 +1,11 @@
 #version 330
 
-/*
 in Data {
-	flat int lod;
-	flat vec4 color;
+	flat float tes;
 } DataIn;
-*/
 
 out vec4 colorOut;
 
 void main() {
-	colorOut = vec4(1, 0, 0, 0);
+	colorOut = vec4(DataIn.tes, DataIn.tes, DataIn.tes, 0);
 }

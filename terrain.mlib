@@ -24,12 +24,18 @@
 					<valueof uniform="T_Chunks" 
 							 type="RENDERER" context="CURRENT" 
 							 component="T_Chunks" />
-														
-					<valueof uniform="tes_ilevel" 		type="RENDERER" context="CURRENT" 
-														component="tes_ilevel"  />
 
-					<valueof uniform="tes_olevel" 		type="RENDERER" context="CURRENT" 
-														component="tes_olevel"  />
+					<valueof uniform="T_Height" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="T_Height"  />
+									
+					<valueof uniform="T_Freq" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="T_Freq"  />
+
+					<valueof uniform="tessellation" 		
+					         type="RENDERER" context="CURRENT" 
+							 component="tessellation"  />
 				</values>
 			</shader>
 		</material>

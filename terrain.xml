@@ -2,22 +2,29 @@
 <project name="Terrain" >
 	<assets>
 		<constants>
-			<constant name="T_Length" value=100 />
-			<constant name="T_Chunks" value=11/>
+			<constant name="T_Length" value=500 />
+			<constant name="T_Chunks" value=15/>
+			<constant name="T_Height" value=100/>
 		</constants>
 		
 		<attributes>
 			<!-- Atributos utilizados para passar as constantes aos shaders-->
-			<attribute name="T_Length" data="FLOAT" type="RENDERER" value=T_Length />
-			<attribute name="T_Chunks" data="INT" type="RENDERER" value=T_Chunks />
+			<attribute name="T_Length"     data="FLOAT" type="RENDERER" value=T_Length />
+			<attribute name="T_Chunks"     data="INT"   type="RENDERER" value=T_Chunks />
 			<!-- Atributos reais -->
-			<attribute name="tes_ilevel" data="FLOAT" type="RENDERER" value=1 />
-			<attribute name="tes_olevel" data="FLOAT" type="RENDERER" value=1 />
+			<attribute name="T_Height"     data="FLOAT" type="RENDERER" value=T_Height />
+			<attribute name="T_Freq"       data="FLOAT" type="RENDERER" value=2.5 />
+			<attribute name="tessellation" data="FLOAT" type="RENDERER" value=30 />
 		</attributes>
 
 		<scenes>
-			<scene name="Scene" >
+			<scene name="Scene">
 				<geometry name="Grid" type="GRID" LENGTH=T_Length  DIVISIONS=T_Chunks />
+			</scene>
+			<scene name="Axis">
+				<geometry name = "axis" type = "AXIS"  >
+					<SCALE x=5 y=5 z =5 />
+				</geometry>
 			</scene>
 		</scenes>
 		
@@ -34,8 +41,8 @@
 				<FOV value=60/>
 				<NEAR value= 0.1/>
 				<FAR value= 1000/>
-                <POSITION x="0" y="10" z="0" w="1" />
-                <VIEW x="0" y="-1" z="-1" w="0" />
+                <POSITION x="0" y=T_Height z="0" w="1" />
+                <VIEW x="0" y="0" z="-1" />
  			</camera>
 		</cameras>
 		
@@ -67,14 +74,17 @@
 				</injectionMaps>
 			</pass>
 		</pipeline>
+
 	</pipelines>
 
 	<interface>
 		<window label="Main Window">
-			<var label="tes_ilevel" type="RENDERER" context="CURRENT" component="tes_ilevel" 
+			<var label="tessellation" type="RENDERER" context="CURRENT" component="tessellation" 
 				def="min=1 max=64 step=0.01"/>
-			<var label="tes_olevel" type="RENDERER" context="CURRENT" component="tes_olevel" 
-				def="min=1 max=64 step=0.01"/>
+			<var label="T_Height" type="RENDERER" context="CURRENT" component="T_Height" 
+				def="min=0 max=1000 step=0.01"/>
+			<var label="T_Freq" type="RENDERER" context="CURRENT" component="T_Freq" 
+				def="min=0.01 max=25 step=0.01"/>
 		</window>
 	</interface>
 </project>
