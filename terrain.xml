@@ -1,0 +1,80 @@
+<?xml version="1.0" ?>
+<project name="Terrain" >
+	<assets>
+		<constants>
+			<constant name="T_Length" value=100 />
+			<constant name="T_Chunks" value=11/>
+		</constants>
+		
+		<attributes>
+			<!-- Atributos utilizados para passar as constantes aos shaders-->
+			<attribute name="T_Length" data="FLOAT" type="RENDERER" value=T_Length />
+			<attribute name="T_Chunks" data="INT" type="RENDERER" value=T_Chunks />
+			<!-- Atributos reais -->
+			<attribute name="tes_ilevel" data="FLOAT" type="RENDERER" value=1 />
+			<attribute name="tes_olevel" data="FLOAT" type="RENDERER" value=1 />
+		</attributes>
+
+		<scenes>
+			<scene name="Scene" >
+				<geometry name="Grid" type="GRID" LENGTH=T_Length  DIVISIONS=T_Chunks />
+			</scene>
+		</scenes>
+		
+		<viewports>
+			<viewport name="MainViewport">
+				<CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
+			</viewport>
+		</viewports>
+		
+		<cameras>
+			<camera name="MainCamera" >
+				<viewport name="MainViewport" />
+				<TYPE value="PERSPECTIVE"/>
+				<FOV value=60/>
+				<NEAR value= 0.1/>
+				<FAR value= 1000/>
+                <POSITION x="0" y="10" z="0" w="1" />
+                <VIEW x="0" y="-1" z="-1" w="0" />
+ 			</camera>
+		</cameras>
+		
+		<lights>
+			<light name="Sun">
+				<DIRECTION x=-2 y=-1 z=-2 />
+			</light>
+		</lights>
+		
+		<materialLibs>
+			<materialLib filename="terrain.mlib" />
+		</materialLibs>
+	</assets>
+	
+	<pipelines>
+		<pipeline name="main" default="true">
+			<pass class="default" name="pass1">
+				<scenes>
+					<scene name="Scene" />
+				</scenes>
+				<camera name="MainCamera" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<injectionMaps>
+					<map toMaterial="*">
+						<shader fromMaterial ="terrain" fromLibrary="Terrain" />
+					</map>
+				</injectionMaps>
+			</pass>
+		</pipeline>
+	</pipelines>
+
+	<interface>
+		<window label="Main Window">
+			<var label="tes_ilevel" type="RENDERER" context="CURRENT" component="tes_ilevel" 
+				def="min=1 max=64 step=0.01"/>
+			<var label="tes_olevel" type="RENDERER" context="CURRENT" component="tes_olevel" 
+				def="min=1 max=64 step=0.01"/>
+		</window>
+	</interface>
+</project>

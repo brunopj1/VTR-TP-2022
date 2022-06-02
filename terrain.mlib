@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<materialLib name="Terrain">
+	<shaders>
+		<shader name="terrain" 				ps = "shaders/terrain.frag"
+											tc = "shaders/terrain.tesc"
+											te = "shaders/terrain.tese"
+											vs = "shaders/terrain.vert" />
+											
+	</shaders>
+	
+	<materials>
+
+		<material name="terrain">
+			<shader name="terrain">
+				<values>
+					<valueof uniform="m_pvm" 
+							 type="RENDERER" context="CURRENT" 
+							 component="PROJECTION_VIEW_MODEL" />
+
+					<valueof uniform="T_Length" 
+							 type="RENDERER" context="CURRENT" 
+							 component="T_Length" />
+
+					<valueof uniform="T_Chunks" 
+							 type="RENDERER" context="CURRENT" 
+							 component="T_Chunks" />
+														
+					<valueof uniform="tes_ilevel" 		type="RENDERER" context="CURRENT" 
+														component="tes_ilevel"  />
+
+					<valueof uniform="tes_olevel" 		type="RENDERER" context="CURRENT" 
+														component="tes_olevel"  />
+				</values>
+			</shader>
+		</material>
+	</materials>
+</materialLib>
