@@ -2,9 +2,9 @@
 <project name="Terrain" >
 	<assets>
 		<constants>
-			<constant name="T_Length" value=500 />
-			<constant name="T_Chunks" value=15/>
-			<constant name="T_Height" value=100/>
+			<constant name="T_Length" value=1000 />
+			<constant name="T_Chunks" value=50/>
+			<constant name="T_Height" value=250/>
 		</constants>
 		
 		<attributes>
@@ -13,18 +13,12 @@
 			<attribute name="T_Chunks"     data="INT"   type="RENDERER" value=T_Chunks />
 			<!-- Atributos reais -->
 			<attribute name="T_Height"     data="FLOAT" type="RENDERER" value=T_Height />
-			<attribute name="T_Freq"       data="FLOAT" type="RENDERER" value=2.5 />
-			<attribute name="tessellation" data="FLOAT" type="RENDERER" value=30 />
+			<attribute name="pixelsPerTri" data="FLOAT" type="RENDERER" value=5 />
 		</attributes>
 
 		<scenes>
 			<scene name="Scene">
 				<geometry name="Grid" type="GRID" LENGTH=T_Length  DIVISIONS=T_Chunks />
-			</scene>
-			<scene name="Axis">
-				<geometry name = "axis" type = "AXIS"  >
-					<SCALE x=5 y=5 z =5 />
-				</geometry>
 			</scene>
 		</scenes>
 		
@@ -67,11 +61,9 @@
 				<lights>
 					<light name="Sun" />
 				</lights>
-				<injectionMaps>
-					<map toMaterial="*">
-						<shader fromMaterial ="terrain" fromLibrary="Terrain" />
-					</map>
-				</injectionMaps>
+				<materialMaps>
+					<map fromMaterial="*" toMaterial="terrain" toLibrary="Terrain" />
+				</materialMaps>
 			</pass>
 		</pipeline>
 
@@ -79,12 +71,10 @@
 
 	<interface>
 		<window label="Main Window">
-			<var label="tessellation" type="RENDERER" context="CURRENT" component="tessellation" 
-				def="min=1 max=64 step=0.01"/>
+			<var label="pixelsPerTri" type="RENDERER" context="CURRENT" component="pixelsPerTri" 
+				def="min=1 max=50 step=0.1"/>
 			<var label="T_Height" type="RENDERER" context="CURRENT" component="T_Height" 
 				def="min=0 max=1000 step=0.01"/>
-			<var label="T_Freq" type="RENDERER" context="CURRENT" component="T_Freq" 
-				def="min=0.01 max=25 step=0.01"/>
 		</window>
 	</interface>
 </project>

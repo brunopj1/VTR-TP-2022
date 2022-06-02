@@ -3,47 +3,61 @@
 layout(triangles, fractional_even_spacing, ccw) in;
 
 uniform	mat4 m_pvm;
+uniform mat3 m_normal;
 
-uniform float T_Length;
-uniform int T_Chunks;
+uniform sampler2D texHeightmap;
+uniform int heightmap_width;
+uniform int heightmap_height;
+
 uniform float T_Height;
 uniform float T_Freq;
 
 in Data {
-	vec3 pos;
-	flat float tes;
+	vec4 pos;
+	vec2 texCoord;
 } DataIn[];
 
 out Data {
-	flat float tes;
+	vec3 normal;
+	vec2 texCoord;
 } DataOut;
 
-float rand(float n) { 
-	return fract(sin(n) * 43758.5453123);
-}
-
-float rand(vec2 n) { 
-	return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
-}
-
-float noise(vec2 n) {
-	const vec2 d = vec2(0.0, 1.0);
-	vec2 b = floor(n);
-	vec2 f = smoothstep(vec2(0.0), vec2(1.0), fract(n));
-	return mix(mix(rand(b), rand(b + d.yx), f.x), mix(rand(b + d.xy), rand(b + d.yy), f.x), f.y);
+float getHeight(vec2 pos) {
+	return texture(texHeightmap, pos).r * T_Height;
+	// (noise(pos.xz * T_Freq * 0.01) * 0.5 + 0.5) * T_Height
 }
 
 void main() {
 
-	DataOut.tes = DataIn[0].tes;
+	// TexCoord
+	vec2 texCoord = 
+		DataIn[0].texCoord * gl_TessCoord.x +
+		DataIn[1].texCoord * gl_TessCoord.y +
+		DataIn[2].texCoord * gl_TessCoord.z;
+		
+	DataOut.texCoord = texCoord;
 
-	vec3 pos = 
+	// Position
+	vec4 pos = 
 		DataIn[0].pos * gl_TessCoord.x +
 		DataIn[1].pos * gl_TessCoord.y +
 		DataIn[2].pos * gl_TessCoord.z;
 
-	pos.y = noise(pos.xz * T_Freq * 0.01) * 0.5 * T_Height;
+	pos.y = getHeight(texCoord);
+	gl_Position = m_pvm * pos;
 
-	gl_Position = m_pvm * vec4(pos, 1.0);
+	// Normal
+	float deltaX = 1 / float(heightmap_width);
+	float deltaZ = 1 / float(heightmap_height);
+
+	vec2 L = texCoord - vec2(deltaX, 0);
+	vec2 R = texCoord + vec2(deltaX, 0);
+	vec2 D = texCoord - vec2(0, deltaZ);
+	vec2 U = texCoord + vec2(0, deltaZ);
+
+	vec3 dirX = vec3(R.x - L.x, getHeight(R) - getHeight(L),     0    );
+	vec3 dirZ = vec3(    0    , getHeight(D) - getHeight(U), D.y - U.y);
+
+	DataOut.normal = normalize(m_normal * normalize(cross(dirZ, dirX)));
 }
 
