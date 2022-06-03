@@ -22,8 +22,21 @@ out Data {
 	vec2 texCoord;
 } DataOut;
 
+vec2 texCoordToPixel = vec2(heightmap_width, heightmap_height);
+vec2 pixelToTexCoord = 1.0 / vec2(heightmap_width, heightmap_height);
+
 float getHeight(vec2 pos) {
-	return texture(texHeightmap, pos).r * T_Height;
+	vec2 pixel = pos * texCoordToPixel;
+	ivec2 pixel_i = ivec2(pixel);
+	vec2 fraction = pixel - pixel_i;
+
+	float h_00 = texture(texHeightmap, (pixel_i              ) * pixelToTexCoord).r;
+	float h_01 = texture(texHeightmap, (pixel_i + ivec2(0, 1)) * pixelToTexCoord).r;
+	float h_10 = texture(texHeightmap, (pixel_i + ivec2(1, 0)) * pixelToTexCoord).r;
+	float h_11 = texture(texHeightmap, (pixel_i + ivec2(1, 1)) * pixelToTexCoord).r;
+
+	return mix(mix(h_00, h_01, fraction.y), mix(h_10, h_11, fraction.y), fraction.x) * T_Height;
+	//return texture(texHeightmap, pos).r * T_Height;
 	// (noise(pos.xz * T_Freq * 0.01) * 0.5 + 0.5) * T_Height
 }
 
@@ -47,13 +60,10 @@ void main() {
 	gl_Position = m_pvm * pos;
 
 	// Normal
-	float deltaX = 1 / float(heightmap_width);
-	float deltaZ = 1 / float(heightmap_height);
-
-	vec2 L = texCoord - vec2(deltaX, 0);
-	vec2 R = texCoord + vec2(deltaX, 0);
-	vec2 D = texCoord - vec2(0, deltaZ);
-	vec2 U = texCoord + vec2(0, deltaZ);
+	vec2 L = texCoord - vec2(pixelToTexCoord.x, 0);
+	vec2 R = texCoord + vec2(pixelToTexCoord.x, 0);
+	vec2 D = texCoord - vec2(0, pixelToTexCoord.y);
+	vec2 U = texCoord + vec2(0, pixelToTexCoord.y);
 
 	vec3 dirX = vec3(R.x - L.x, getHeight(R) - getHeight(L),     0    );
 	vec3 dirZ = vec3(    0    , getHeight(D) - getHeight(U), D.y - U.y);

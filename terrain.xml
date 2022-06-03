@@ -35,8 +35,9 @@
 				<FOV value=60/>
 				<NEAR value= 0.1/>
 				<FAR value= 1000/>
-                <POSITION x="0" y=T_Height z="0" w="1" />
-                <VIEW x="0" y="0" z="-1" />
+                <POSITION x=-156 y=52 z=292 w=1 />
+                <VIEW x=0.25 y=-0.33 z=-0.91 />
+				<LOOK_AT_POINT x=-156 y=52 z=291/>
  			</camera>
 		</cameras>
 		
