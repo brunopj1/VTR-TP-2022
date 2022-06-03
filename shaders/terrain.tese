@@ -9,8 +9,8 @@ uniform sampler2D texHeightmap;
 uniform int heightmap_width;
 uniform int heightmap_height;
 
-uniform float T_Height;
-uniform float T_Freq;
+uniform float Terrain_Height;
+uniform float Terrain_Freq;
 
 in Data {
 	vec4 pos;
@@ -18,6 +18,7 @@ in Data {
 } DataIn[];
 
 out Data {
+	float height;
 	vec3 normal;
 	vec2 texCoord;
 } DataOut;
@@ -35,9 +36,9 @@ float getHeight(vec2 pos) {
 	float h_10 = texture(texHeightmap, (pixel_i + ivec2(1, 0)) * pixelToTexCoord).r;
 	float h_11 = texture(texHeightmap, (pixel_i + ivec2(1, 1)) * pixelToTexCoord).r;
 
-	return mix(mix(h_00, h_01, fraction.y), mix(h_10, h_11, fraction.y), fraction.x) * T_Height;
-	//return texture(texHeightmap, pos).r * T_Height;
-	// (noise(pos.xz * T_Freq * 0.01) * 0.5 + 0.5) * T_Height
+	return mix(mix(h_00, h_01, fraction.y), mix(h_10, h_11, fraction.y), fraction.x) * Terrain_Height;
+	//return texture(texHeightmap, pos).r * Terrain_Height;
+	// (noise(pos.xz * Terrain_Freq * 0.01) * 0.5 + 0.5) * Terrain_Height
 }
 
 void main() {
@@ -50,13 +51,13 @@ void main() {
 		
 	DataOut.texCoord = texCoord;
 
-	// Position
+	// Position + heightNorm
 	vec4 pos = 
 		DataIn[0].pos * gl_TessCoord.x +
 		DataIn[1].pos * gl_TessCoord.y +
 		DataIn[2].pos * gl_TessCoord.z;
 
-	pos.y = getHeight(texCoord);
+	pos.y = DataOut.height = getHeight(texCoord);
 	gl_Position = m_pvm * pos;
 
 	// Normal

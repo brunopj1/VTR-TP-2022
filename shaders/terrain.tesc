@@ -6,11 +6,11 @@ uniform	mat4 m_pvm;
 uniform vec2 viewport_size;
 uniform vec4 cam_up;
 
-uniform float T_Length;
-uniform int T_Chunks;
-uniform float T_Height;
+uniform float Terrain_Length;
+uniform int Terrain_Chunks;
+uniform float Terrain_Height;
 
-uniform float pixelsPerTri;
+uniform float pixels_per_tri;
 
 in Data {
 	vec4 pos;
@@ -23,10 +23,10 @@ out Data {
 } DataOut[];
 
 // Constantes
-float T_Length_2 = T_Length * 0.5;
-float C_Length = T_Length / T_Chunks;
+float Terrain_Length_2 = Terrain_Length * 0.5;
+float C_Length = Terrain_Length / Terrain_Chunks;
 float C_Length_2 = C_Length * 0.5;
-float T_Hypotenuse = sqrt(2 * T_Length_2 * T_Length_2);
+float Terrain_Hypotenuse = sqrt(2 * Terrain_Length_2 * Terrain_Length_2);
 
 // TODO reduzir a tesselacao de triangulos fora do view frustum
 float calculateTes(vec4 pos0, vec4 pos1) {
@@ -44,7 +44,7 @@ float calculateTes(vec4 pos0, vec4 pos1) {
 	// Calcular o numero de pixeis da esfera
 	float pix = abs(up_screen.y - down_screen.y);
 	// Calcular o numero de triangulos
-	return max(pix / pixelsPerTri, 1);
+	return max(pix / pixels_per_tri, 1);
 }
 
 void main() {

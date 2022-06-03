@@ -2,24 +2,26 @@
 <project name="Terrain" >
 	<assets>
 		<constants>
-			<constant name="T_Length" value=1000 />
-			<constant name="T_Chunks" value=50/>
-			<constant name="T_Height" value=250/>
+			<constant name="Terrain_Length" value=1000 />
+			<constant name="Terrain_Chunks" value=50/>
+			<constant name="Terrain_Height" value=250/>
 		</constants>
 		
 		<attributes>
-			<!-- Atributos utilizados para passar as constantes aos shaders-->
-			<attribute name="T_Length"       data="FLOAT" type="RENDERER" value=T_Length />
-			<attribute name="T_Chunks"       data="INT"   type="RENDERER" value=T_Chunks />
-			<!-- Atributos reais -->
-			<attribute name="T_Height"       data="FLOAT" type="RENDERER" value=T_Height />
-			<attribute name="T_Texture_Freq" data="FLOAT" type="RENDERER" value=50 />
-			<attribute name="pixelsPerTri"   data="FLOAT" type="RENDERER" value=5 />
+			<!-- Settings Gerais do Terreno -->
+			<attribute name="Terrain_Length"       data="FLOAT" type="RENDERER" value=Terrain_Length />
+			<attribute name="Terrain_Chunks"       data="INT"   type="RENDERER" value=Terrain_Chunks />
+			<attribute name="Terrain_Height"       data="FLOAT" type="RENDERER" value=Terrain_Height />
+			<attribute name="pixels_per_tri"   data="FLOAT" type="RENDERER" value=5 />
+			<!-- Settings das Texturas -->
+			<attribute name="Texture_Freq" data="FLOAT" type="RENDERER" value=50 />
+			<attribute name="Texture_Blending_Freq" data="FLOAT" type="RENDERER" value=25 />
+			<attribute name="Texture_Blending_Intensity" data="FLOAT" type="RENDERER" value=25 />
 		</attributes>
 
 		<scenes>
 			<scene name="Scene">
-				<geometry name="Grid" type="GRID" LENGTH=T_Length  DIVISIONS=T_Chunks />
+				<geometry name="Grid" type="GRID" LENGTH=Terrain_Length  DIVISIONS=Terrain_Chunks />
 			</scene>
 		</scenes>
 		
@@ -73,12 +75,18 @@
 
 	<interface>
 		<window label="Main Window">
-			<var label="pixelsPerTri" type="RENDERER" context="CURRENT" component="pixelsPerTri" 
+			<!-- Settings Gerais do Terreno -->
+			<var label="pixels_per_tri" type="RENDERER" context="CURRENT" component="pixels_per_tri" 
 				def="min=1 max=50 step=0.1"/>
-			<var label="T_Height" type="RENDERER" context="CURRENT" component="T_Height" 
+			<var label="Terrain_Height" type="RENDERER" context="CURRENT" component="Terrain_Height" 
 				def="min=0 max=1000 step=0.1"/>
-			<var label="T_Texture_Freq" type="RENDERER" context="CURRENT" component="T_Texture_Freq" 
+			<!-- Settings das Texturas -->
+			<var label="Texture_Freq" type="RENDERER" context="CURRENT" component="Texture_Freq" 
 				def="min=10 max=200 step=0.1"/>
+			<var label="Texture_Blending_Freq" type="RENDERER" context="CURRENT" component="Texture_Blending_Freq" 
+				def="min=1 max=200 step=0.1"/>
+			<var label="Texture_Blending_Intensity" type="RENDERER" context="CURRENT" component="Texture_Blending_Intensity" 
+				def="min=0.1 max=50 step=0.1"/>
 		</window>
 	</interface>
 </project>

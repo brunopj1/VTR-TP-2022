@@ -2,7 +2,9 @@
 <materialLib name="Terrain">
 	<textures>
 		<texture name="texHeightmap" filename="./textures/heightmap_0.jpg" mipmap=true />
-		<texture name="texGrass" filename="./textures/Rock_Grass_0.jpg" mipmap=true />
+		<texture name="texLevel0" filename="./textures/Grass_0.jpg" mipmap=true />
+		<texture name="texLevel1" filename="./textures/Rocky.jpg" mipmap=true />
+		<texture name="texLevel2" filename="./textures/Snow.jpg" mipmap=true />
 	</textures>
 
 	<shaders>
@@ -45,21 +47,17 @@
 							 type="LIGHT" context="Sun"
 							 component="DIRECTION" />
 
-					<!-- Variaveis ao controlo do utilizador -->
+					<!-- Settings Gerais do Terreno -->
 
-					<valueof uniform="pixelsPerTri" 		
+					<valueof uniform="Terrain_Height" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Terrain_Height"  />
+
+					<valueof uniform="pixels_per_tri" 		
 					         type="RENDERER" context="CURRENT" 
-							 component="pixelsPerTri"  />
+							 component="pixels_per_tri"  />
 
-					<valueof uniform="T_Height" 		
-							 type="RENDERER" context="CURRENT" 
-							 component="T_Height"  />
-							
-					<valueof uniform="T_Texture_Freq" 		
-							 type="RENDERER" context="CURRENT" 
-							 component="T_Texture_Freq"  />
-
-					<!-- Variaveis sobre o heightmap -->
+					<!-- Heightmap -->
 
 					<valueof uniform="texHeightmap"
 							 type="TEXTURE_BINDING" context="CURRENT"
@@ -73,11 +71,33 @@
 					         type="TEXTURE" context="CURRENT" 
 							 component="HEIGHT" id=0 />
 
-					<!-- Texturas do terreno -->
+					<!-- Settings das Texturas -->
 
-					<valueof uniform="texGrass"
+					<valueof uniform="Texture_Freq" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Texture_Freq"  />
+							 
+					<valueof uniform="Texture_Blending_Freq" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Texture_Blending_Freq"  />
+							 
+					<valueof uniform="Texture_Blending_Intensity" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Texture_Blending_Intensity"  />
+
+					<!-- Texturas -->
+
+					<valueof uniform="texLevel0"
 							 type="TEXTURE_BINDING" context="CURRENT"
 							 component="UNIT" id=1 />
+
+					<valueof uniform="texLevel1"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=2 />
+
+					<valueof uniform="texLevel2"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=3 />
 				</values>
 			</shader>
 			<textures>
@@ -85,7 +105,9 @@
 					<WRAP_S value="CLAMP_TO_EDGE"/>
 					<WRAP_T value="CLAMP_TO_EDGE"/>
 				</texture>
-				<texture name="texGrass" UNIT=1 />
+				<texture name="texLevel0" UNIT=1 />
+				<texture name="texLevel1" UNIT=2 />
+				<texture name="texLevel2" UNIT=3 />
 			</textures>
 		</material>
 	</materials>
