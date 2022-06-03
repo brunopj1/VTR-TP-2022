@@ -1,7 +1,8 @@
 <?xml version="1.0" ?>
 <materialLib name="Terrain">
 	<textures>
-		<texture name="texHeightmap" filename="./textures/heightmap0.jpg" mipmap=true />
+		<texture name="texHeightmap" filename="./textures/heightmap_0.jpg" mipmap=true />
+		<texture name="texGrass" filename="./textures/Rock_Grass_0.jpg" mipmap=true />
 	</textures>
 
 	<shaders>
@@ -17,6 +18,9 @@
 		<material name="terrain">
 			<shader name="terrain">
 				<values>
+
+					<!-- Informacoes sobre a cena / camara -->
+
 					<valueof uniform="m_pvm" 
 							 type="RENDERER" context="CURRENT" 
 							 component="PROJECTION_VIEW_MODEL" />
@@ -28,10 +32,34 @@
 					<valueof uniform="m_normal" 
 							 type="RENDERER" context="CURRENT" 
 							 component="NORMAL" />
+
+					<valueof uniform="viewport_size" 
+							 type="VIEWPORT" context="CURRENT" 
+							 component="ABSOLUTE_SIZE" />
+
+					<valueof uniform="cam_up" 		
+					         type="CAMERA" context="CURRENT" 
+							 component="NORMALIZED_UP"  />
 							 
 					<valueof uniform="l_dir" 
 							 type="LIGHT" context="Sun"
 							 component="DIRECTION" />
+
+					<!-- Variaveis ao controlo do utilizador -->
+
+					<valueof uniform="pixelsPerTri" 		
+					         type="RENDERER" context="CURRENT" 
+							 component="pixelsPerTri"  />
+
+					<valueof uniform="T_Height" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="T_Height"  />
+							
+					<valueof uniform="T_Texture_Freq" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="T_Texture_Freq"  />
+
+					<!-- Variaveis sobre o heightmap -->
 
 					<valueof uniform="texHeightmap"
 							 type="TEXTURE_BINDING" context="CURRENT"
@@ -45,21 +73,11 @@
 					         type="TEXTURE" context="CURRENT" 
 							 component="HEIGHT" id=0 />
 
-					<valueof uniform="viewport_size" 
-							 type="VIEWPORT" context="CURRENT" 
-							 component="ABSOLUTE_SIZE" />
+					<!-- Texturas do terreno -->
 
-					<valueof uniform="cam_up" 		
-					         type="CAMERA" context="CURRENT" 
-							 component="NORMALIZED_UP"  />
-
-					<valueof uniform="T_Height" 		
-							 type="RENDERER" context="CURRENT" 
-							 component="T_Height"  />
-
-					<valueof uniform="pixelsPerTri" 		
-					         type="RENDERER" context="CURRENT" 
-							 component="pixelsPerTri"  />
+					<valueof uniform="texGrass"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=1 />
 				</values>
 			</shader>
 			<textures>
@@ -67,6 +85,7 @@
 					<WRAP_S value="CLAMP_TO_EDGE"/>
 					<WRAP_T value="CLAMP_TO_EDGE"/>
 				</texture>
+				<texture name="texGrass" UNIT=1 />
 			</textures>
 		</material>
 	</materials>
