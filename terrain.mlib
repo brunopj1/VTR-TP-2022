@@ -71,19 +71,11 @@
 					         type="TEXTURE" context="CURRENT" 
 							 component="HEIGHT" id=0 />
 
-					<!-- Settings das Texturas -->
+					<!-- Settings do Noise -->
 
-					<valueof uniform="Texture_Freq" 		
+					<valueof uniform="Noise_Freq" 		
 							 type="RENDERER" context="CURRENT" 
-							 component="Texture_Freq"  />
-							 
-					<valueof uniform="Texture_Blending_Freq" 		
-							 type="RENDERER" context="CURRENT" 
-							 component="Texture_Blending_Freq"  />
-							 
-					<valueof uniform="Texture_Blending_Intensity" 		
-							 type="RENDERER" context="CURRENT" 
-							 component="Texture_Blending_Intensity"  />
+							 component="Noise_Freq"  />
 
 					<!-- Texturas -->
 
