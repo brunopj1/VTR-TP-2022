@@ -3,7 +3,11 @@
 ## TODO:
 
 - Colocar a tesselacao a zero quando nao se ve o triangulo
-- Adicionar texturas (relva + pedra + neve)
+
 - Descobrir se da pra fazer as normais de outra forma (ha problemas com a tesselacao dinamica)
-- Precalcular as normais (compute shader)
 - Descobrir qual o problema das normais (sombras triangulares)
+
+- Utilizar noise para gerar o terreno (perlin, simplex, celular, etc)
+
+- Blending de texturas
+- Corrigir texturas esticadas (quando o terreno sobe de repente)
