@@ -7,7 +7,5 @@
 - Descobrir se da pra fazer as normais de outra forma (ha problemas com a tesselacao dinamica)
 - Descobrir qual o problema das normais (sombras triangulares)
 
-- Utilizar noise para gerar o terreno (perlin, simplex, celular, etc)
-
 - Blending de texturas
 - Corrigir texturas esticadas (quando o terreno sobe de repente)
