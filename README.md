@@ -11,3 +11,5 @@
 
 - Blending de texturas
 - Corrigir texturas esticadas (quando o terreno sobe de repente)
+
+- Fazer o terreno acompanhar o movimento da camara
