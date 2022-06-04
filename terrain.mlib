@@ -38,16 +38,26 @@
 					<valueof uniform="viewport_size" 
 							 type="VIEWPORT" context="CURRENT" 
 							 component="ABSOLUTE_SIZE" />
-
-					<valueof uniform="cam_up" 		
-					         type="CAMERA" context="CURRENT" 
-							 component="NORMALIZED_UP"  />
 							 
 					<valueof uniform="l_dir" 
 							 type="LIGHT" context="Sun"
 							 component="DIRECTION" />
 
+					<!-- Camara -->
+
+					<valueof uniform="cam_pos" 		
+					         type="CAMERA" context="CURRENT" 
+							 component="POSITION"  />
+
+					<valueof uniform="cam_up" 		
+					         type="CAMERA" context="CURRENT" 
+							 component="NORMALIZED_UP"  />
+
 					<!-- Settings Gerais do Terreno -->
+
+					<valueof uniform="Terrain_Length" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Terrain_Length"  />
 
 					<valueof uniform="Terrain_Height" 		
 							 type="RENDERER" context="CURRENT" 
@@ -56,20 +66,6 @@
 					<valueof uniform="pixels_per_tri" 		
 					         type="RENDERER" context="CURRENT" 
 							 component="pixels_per_tri"  />
-
-					<!-- Heightmap -->
-
-					<valueof uniform="texHeightmap"
-							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=0 />
-
-					<valueof uniform="heightmap_width"	
-					         type="TEXTURE" context="CURRENT" 
-							 component="WIDTH" id=0 />
-
-					<valueof uniform="heightmap_height"	
-					         type="TEXTURE" context="CURRENT" 
-							 component="HEIGHT" id=0 />
 
 					<!-- Settings do Noise -->
 

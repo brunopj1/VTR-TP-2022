@@ -4,7 +4,7 @@
 		<constants>
 			<constant name="Terrain_Length" value=1000 />
 			<constant name="Terrain_Chunks" value=50/>
-			<constant name="Terrain_Height" value=250/>
+			<constant name="Terrain_Height" value=500/>
 		</constants>
 		
 		<attributes>
@@ -14,7 +14,7 @@
 			<attribute name="Terrain_Height"       data="FLOAT" type="RENDERER" value=Terrain_Height />
 			<attribute name="pixels_per_tri"   data="FLOAT" type="RENDERER" value=5 />
 			<!-- Settings das Texturas -->
-			<attribute name="Noise_Freq" data="FLOAT" type="RENDERER" value=50 />
+			<attribute name="Noise_Freq" data="FLOAT" type="RENDERER" value=5 />
 		</attributes>
 
 		<scenes>
@@ -36,7 +36,7 @@
 				<FOV value=60/>
 				<NEAR value= 0.1/>
 				<FAR value= 1000/>
-                <POSITION x=-156 y=800 z=292 w=1 />
+                <POSITION x=0 y=800 z=0 w=1 />
                 <VIEW x=0.25 y=-0.33 z=-0.91 />
 				<LOOK_AT_POINT x=-156 y=52 z=291/>
  			</camera>
