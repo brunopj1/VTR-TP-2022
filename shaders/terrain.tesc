@@ -6,10 +6,6 @@ uniform	mat4 m_pvm;
 uniform vec2 viewport_size;
 uniform vec4 cam_up;
 
-uniform float Terrain_Length;
-uniform int Terrain_Chunks;
-uniform float Terrain_Height;
-
 uniform float pixels_per_tri;
 
 in Data {
@@ -21,12 +17,6 @@ out Data {
 	vec4 pos;
 	vec2 texCoord;
 } DataOut[];
-
-// Constantes
-float Terrain_Length_2 = Terrain_Length * 0.5;
-float C_Length = Terrain_Length / Terrain_Chunks;
-float C_Length_2 = C_Length * 0.5;
-float Terrain_Hypotenuse = sqrt(2 * Terrain_Length_2 * Terrain_Length_2);
 
 // TODO reduzir a tesselacao de triangulos fora do view frustum
 float calculateTes(vec4 pos0, vec4 pos1) {

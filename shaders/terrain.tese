@@ -3,9 +3,6 @@
 layout(triangles, fractional_even_spacing, ccw) in;
 
 uniform	mat4 m_pvm;
-uniform mat3 m_normal;
-
-uniform vec2 viewport_size;
 
 uniform float Terrain_Height;
 uniform float Noise_Freq;
@@ -64,12 +61,6 @@ vec2 rhash(vec2 uv) {
 	return fract(fract(uv / mys) * uv);
 }
 
-vec3 hash(vec3 p) {
-	return fract(sin(vec3(dot(p, vec3(1.0, 57.0, 113.0)),
-						  dot(p, vec3(57.0, 113.0, 1.0)),
-						  dot(p, vec3(113.0, 1.0, 57.0)))) * 43758.5453);
-}
-
 float voronoiNoise(vec2 point) {
 	vec2 p = floor(point);
 	vec2 f = fract(point);
@@ -86,7 +77,7 @@ float voronoiNoise(vec2 point) {
 
 // Noise
 
-float getNoise(vec2 pos) {
+float getNoise_Mountains(vec2 pos) {
 	float v = 0.5000 * voronoiNoise(pos);
 	pos *= 2;
 	v += 0.2500 * voronoiNoise(pos);
@@ -94,6 +85,8 @@ float getNoise(vec2 pos) {
 	v += 0.1250 * voronoiNoise(pos);
 	pos *= 2;
 	v += 0.1250 * gradientNoise(pos);
+	pos *= 2;
+	v += 0.0625 * gradientNoise(pos);
 	pos *= 2;
 	v += 0.0625 * gradientNoise(pos);
 
@@ -112,7 +105,7 @@ void main() {
 	DataOut.texCoord = texCoord;
 
 	// Noise
-	DataOut.noise = getNoise(texCoord * Noise_Freq);
+	DataOut.noise = getNoise_Mountains(texCoord * Noise_Freq);
 
 	// Position
 	vec4 pos = 
