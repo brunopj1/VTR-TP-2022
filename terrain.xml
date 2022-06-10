@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+<project name="Terrain" >
+	<assets>
+		<constants>
+			<constant name="Terrain_Length" value=1000 />
+			<constant name="Terrain_Chunks" value=50/>
+			<constant name="Terrain_Height" value=250/>
+		</constants>
+		
+		<attributes>
+			<!-- Settings Gerais do Terreno -->
+			<attribute name="Terrain_Length"       data="FLOAT" type="RENDERER" value=Terrain_Length />
+			<attribute name="Terrain_Chunks"       data="INT"   type="RENDERER" value=Terrain_Chunks />
+			<attribute name="Terrain_Height"       data="FLOAT" type="RENDERER" value=Terrain_Height />
+			<attribute name="pixels_per_tri"   data="FLOAT" type="RENDERER" value=5 />
+			<!-- Settings das Texturas -->
+			<attribute name="Texture_Freq" data="FLOAT" type="RENDERER" value=50 />
+			<attribute name="Texture_Blending_Freq" data="FLOAT" type="RENDERER" value=25 />
+			<attribute name="Texture_Blending_Intensity" data="FLOAT" type="RENDERER" value=25 />
+		</attributes>
+
+		<scenes>
+			<scene name="Scene">
+				<geometry name="Grid" type="GRID" LENGTH=Terrain_Length  DIVISIONS=Terrain_Chunks />
+			</scene>
+		</scenes>
+		
+		<viewports>
+			<viewport name="MainViewport">
+				<CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
+			</viewport>
+		</viewports>
+		
+		<cameras>
+			<camera name="MainCamera" >
+				<viewport name="MainViewport" />
+				<TYPE value="PERSPECTIVE"/>
+				<FOV value=60/>
+				<NEAR value= 0.1/>
+				<FAR value= 1000/>
+                <POSITION x=-156 y=52 z=292 w=1 />
+                <VIEW x=0.25 y=-0.33 z=-0.91 />
+				<LOOK_AT_POINT x=-156 y=52 z=291/>
+ 			</camera>
+		</cameras>
+		
+		<lights>
+			<light name="Sun">
+				<DIRECTION x=-2 y=-1 z=-2 />
+			</light>
+		</lights>
+		
+		<materialLibs>
+			<materialLib filename="terrain.mlib" />
+		</materialLibs>
+	</assets>
+	
+	<pipelines>
+		<pipeline name="main" default="true">
+			<pass class="default" name="pass1">
+				<scenes>
+					<scene name="Scene" />
+				</scenes>
+				<camera name="MainCamera" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<materialMaps>
+					<map fromMaterial="*" toMaterial="terrain" toLibrary="Terrain" />
+				</materialMaps>
+			</pass>
+		</pipeline>
+
+	</pipelines>
+
+	<interface>
+		<window label="Main Window">
+			<!-- Settings Gerais do Terreno -->
+			<var label="pixels_per_tri" type="RENDERER" context="CURRENT" component="pixels_per_tri" 
+				def="min=1 max=50 step=0.1"/>
+			<var label="Terrain_Height" type="RENDERER" context="CURRENT" component="Terrain_Height" 
+				def="min=0 max=1000 step=0.1"/>
+			<!-- Settings das Texturas -->
+			<var label="Texture_Freq" type="RENDERER" context="CURRENT" component="Texture_Freq" 
+				def="min=10 max=200 step=0.1"/>
+			<var label="Texture_Blending_Freq" type="RENDERER" context="CURRENT" component="Texture_Blending_Freq" 
+				def="min=1 max=200 step=0.1"/>
+			<var label="Texture_Blending_Intensity" type="RENDERER" context="CURRENT" component="Texture_Blending_Intensity" 
+				def="min=0.1 max=50 step=0.1"/>
+		</window>
+	</interface>
+</project>
