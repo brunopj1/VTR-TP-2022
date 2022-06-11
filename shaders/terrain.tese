@@ -15,9 +15,11 @@ in Data {
 } DataIn[];
 
 out Data {
-	float heightNormalized;
+	vec4 position;
 	vec3 normal;
+	vec3 normal_world;
 	vec2 texCoord;
+	float heightNormalized;
 } DataOut;
 
 // Gradient Noise
@@ -89,8 +91,6 @@ float getNoise_Mountains(vec2 pos) {
 	v += 0.1250 * gradientNoise(pos);
 	pos *= 2;
 	v += 0.0625 * gradientNoise(pos);
-	pos *= 2;
-	v += 0.0625 * gradientNoise(pos);
 
 	return v;
 }
@@ -126,6 +126,7 @@ void main() {
 		DataIn[2].pos * gl_TessCoord.z;
 
 	pos.y += noise.y;
+	DataOut.position = pos;
 	gl_Position = m_pvm * pos;
 
 	// Normal
@@ -140,6 +141,7 @@ void main() {
 	vec3 dirX = R - L;
 	vec3 dirZ = D - U;
 
-	DataOut.normal = normalize(m_normal * normalize(cross(dirZ, dirX)));
+	DataOut.normal_world = normalize(cross(dirZ, dirX));
+	DataOut.normal = normalize(m_normal * DataOut.normal_world);
 }
 

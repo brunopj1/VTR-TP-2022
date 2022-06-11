@@ -3,7 +3,7 @@
 	<assets>
 		<constants>
 			<constant name="Terrain_Length" value=2500 />
-			<constant name="Terrain_Chunks" value=25/>
+			<constant name="Terrain_Chunks" value=15/>
 			<constant name="Terrain_Height" value=1000/>
 		</constants>
 		

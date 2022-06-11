@@ -1,7 +1,6 @@
 <?xml version="1.0" ?>
 <materialLib name="Terrain">
 	<textures>
-		<texture name="texHeightmap" filename="./textures/heightmap_0.jpg" mipmap=true />
 		<texture name="texLevel0" filename="./textures/Grass_0.jpg" mipmap=true />
 		<texture name="texLevel1" filename="./textures/Rocky.jpg" mipmap=true />
 		<texture name="texLevel2" filename="./textures/Snow.jpg" mipmap=true />
@@ -79,25 +78,21 @@
 
 					<valueof uniform="texLevel0"
 							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=1 />
+							 component="UNIT" id=0 />
 
 					<valueof uniform="texLevel1"
 							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=2 />
+							 component="UNIT" id=1 />
 
 					<valueof uniform="texLevel2"
 							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=3 />
+							 component="UNIT" id=2 />
 				</values>
 			</shader>
 			<textures>
-				<texture name="texHeightmap" UNIT=0 >
-					<WRAP_S value="CLAMP_TO_EDGE"/>
-					<WRAP_T value="CLAMP_TO_EDGE"/>
-				</texture>
-				<texture name="texLevel0" UNIT=1 />
-				<texture name="texLevel1" UNIT=2 />
-				<texture name="texLevel2" UNIT=3 />
+				<texture name="texLevel0" UNIT=0 />
+				<texture name="texLevel1" UNIT=1 />
+				<texture name="texLevel2" UNIT=2 />
 			</textures>
 		</material>
 	</materials>
