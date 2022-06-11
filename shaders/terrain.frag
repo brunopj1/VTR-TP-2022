@@ -22,7 +22,8 @@ out vec4 colorOut;
 // Main
 
 void main() {
-	//vec3 ld = normalize(vec3(m_view * -l_dir));
-	//float intensity = max(0, dot(normalize(DataIn.normal), ld));
-	colorOut = vec4(DataIn.noise);
+	vec3 ld = normalize(vec3(m_view * -l_dir));
+	float intensity = max(0, dot(normalize(DataIn.normal), ld));
+	colorOut = vec4(intensity);
+	//colorOut = vec4(DataIn.noise);
 }

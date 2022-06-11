@@ -77,7 +77,7 @@
 			<var label="pixels_per_tri" type="RENDERER" context="CURRENT" component="pixels_per_tri" 
 				def="min=1 max=50 step=0.1"/>
 			<var label="Terrain_Height" type="RENDERER" context="CURRENT" component="Terrain_Height" 
-				def="min=0 max=1000 step=0.1"/>
+				def="min=0 max=2000 step=0.1"/>
 			<!-- Settings das Texturas -->
 			<var label="Noise_Freq" type="RENDERER" context="CURRENT" component="Noise_Freq" 
 				def="min=0.01 max=20 step=0.01"/>
