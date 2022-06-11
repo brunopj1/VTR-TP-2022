@@ -6,7 +6,7 @@ uniform	mat4 m_pvm;
 uniform vec2 viewport_size;
 uniform vec4 cam_up;
 
-uniform float pixels_per_tri;
+uniform float Pixels_Per_Tri;
 
 in Data {
 	vec4 pos;
@@ -34,7 +34,7 @@ float calculateTes(vec4 pos0, vec4 pos1) {
 	// Calcular o numero de pixeis da esfera
 	float pix = abs(up_screen.y - down_screen.y);
 	// Calcular o numero de triangulos
-	return max(pix / pixels_per_tri, 1);
+	return max(pix / Pixels_Per_Tri, 1);
 }
 
 void main() {

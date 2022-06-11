@@ -7,7 +7,7 @@ uniform sampler2D texLevel0;
 uniform sampler2D texLevel1;
 uniform sampler2D texLevel2;
 
-uniform float Noise_Freq;
+uniform float Texture_Freq;
 
 in Data {
 	float heightNormalized;
@@ -24,7 +24,7 @@ void main() {
 
 	// Texture
 	float h = DataIn.heightNormalized;
-	vec2 coord = DataIn.texCoord * Noise_Freq;
+	vec2 coord = DataIn.texCoord * Texture_Freq;
 	vec4 diffuse;
 	if (h < 0.5) {
 		diffuse = texture(texLevel0, coord);

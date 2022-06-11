@@ -7,7 +7,7 @@ uniform	mat3 m_normal;
 
 uniform float Terrain_Length;
 uniform float Terrain_Height;
-uniform float Noise_Freq;
+uniform float Heightmap_Freq;
 
 in Data {
 	vec4 pos;
@@ -116,7 +116,7 @@ void main() {
 	DataOut.texCoord = texCoord;
 
 	// Noise
-	vec2 noise = getHeight(texCoord * Noise_Freq);
+	vec2 noise = getHeight(texCoord * Heightmap_Freq);
 	DataOut.heightNormalized = noise.x;
 
 	// Position
@@ -132,10 +132,10 @@ void main() {
 	float offsetPos = 5;
 	float offsetTex = offsetPos / Terrain_Length;
 	
-	vec3 L = vec3(pos.x - offsetPos, getHeight((texCoord - vec2(offsetTex, 0)) * Noise_Freq).y,             pos.z);
-	vec3 R = vec3(pos.x + offsetPos, getHeight((texCoord + vec2(offsetTex, 0)) * Noise_Freq).y,             pos.z);
-	vec3 D = vec3(            pos.x, getHeight((texCoord - vec2(0, offsetTex)) * Noise_Freq).y, pos.z + offsetPos);
-	vec3 U = vec3(            pos.x, getHeight((texCoord + vec2(0, offsetTex)) * Noise_Freq).y, pos.z - offsetPos);
+	vec3 L = vec3(pos.x - offsetPos, getHeight((texCoord - vec2(offsetTex, 0)) * Heightmap_Freq).y,             pos.z);
+	vec3 R = vec3(pos.x + offsetPos, getHeight((texCoord + vec2(offsetTex, 0)) * Heightmap_Freq).y,             pos.z);
+	vec3 D = vec3(            pos.x, getHeight((texCoord - vec2(0, offsetTex)) * Heightmap_Freq).y, pos.z + offsetPos);
+	vec3 U = vec3(            pos.x, getHeight((texCoord + vec2(0, offsetTex)) * Heightmap_Freq).y, pos.z - offsetPos);
 
 	vec3 dirX = R - L;
 	vec3 dirZ = D - U;

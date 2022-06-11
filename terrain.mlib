@@ -21,7 +21,7 @@
 			<shader name="terrain">
 				<values>
 
-					<!-- Informacoes sobre a cena / camara -->
+					<!-- Cena -->
 
 					<valueof uniform="m_pvm" 
 							 type="RENDERER" context="CURRENT" 
@@ -53,7 +53,7 @@
 					         type="CAMERA" context="CURRENT" 
 							 component="NORMALIZED_UP"  />
 
-					<!-- Settings Gerais do Terreno -->
+					<!-- Terreno -->
 
 					<valueof uniform="Terrain_Length" 		
 							 type="RENDERER" context="CURRENT" 
@@ -63,17 +63,19 @@
 							 type="RENDERER" context="CURRENT" 
 							 component="Terrain_Height"  />
 
-					<valueof uniform="pixels_per_tri" 		
-					         type="RENDERER" context="CURRENT" 
-							 component="pixels_per_tri"  />
-
-					<!-- Settings do Noise -->
-
-					<valueof uniform="Noise_Freq" 		
+					<valueof uniform="Heightmap_Freq" 		
 							 type="RENDERER" context="CURRENT" 
-							 component="Noise_Freq"  />
+							 component="Heightmap_Freq"  />
+
+					<valueof uniform="Pixels_Per_Tri" 		
+					         type="RENDERER" context="CURRENT" 
+							 component="Pixels_Per_Tri"  />
 
 					<!-- Texturas -->
+
+					<valueof uniform="Texture_Freq" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Texture_Freq"  />
 
 					<valueof uniform="texLevel0"
 							 type="TEXTURE_BINDING" context="CURRENT"
