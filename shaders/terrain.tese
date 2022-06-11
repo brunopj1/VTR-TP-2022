@@ -15,7 +15,7 @@ in Data {
 } DataIn[];
 
 out Data {
-	float noise;
+	float heightNormalized;
 	vec3 normal;
 	vec2 texCoord;
 } DataOut;
@@ -99,8 +99,9 @@ float getNoise_Plains(vec2 pos) {
 	return gradientNoise(pos * 4);
 }
 
-float getHeight(vec2 pos) {
-	return getNoise_Mountains(pos) * Terrain_Height;
+vec2 getHeight(vec2 pos) { // Returns { noise, height }
+	float noise = getNoise_Mountains(pos);
+	return vec2(noise, noise * Terrain_Height);
 }
 
 // Main
@@ -115,7 +116,8 @@ void main() {
 	DataOut.texCoord = texCoord;
 
 	// Noise
-	DataOut.noise = getHeight(texCoord * Noise_Freq);
+	vec2 noise = getHeight(texCoord * Noise_Freq);
+	DataOut.heightNormalized = noise.x;
 
 	// Position
 	vec4 pos = 
@@ -123,17 +125,17 @@ void main() {
 		DataIn[1].pos * gl_TessCoord.y +
 		DataIn[2].pos * gl_TessCoord.z;
 
-	pos.y += DataOut.noise;
+	pos.y += noise.y;
 	gl_Position = m_pvm * pos;
 
 	// Normal
 	float offsetPos = 5;
 	float offsetTex = offsetPos / Terrain_Length;
 	
-	vec3 L = vec3(pos.x - offsetPos, getHeight((texCoord - vec2(offsetTex, 0)) * Noise_Freq),             pos.z);
-	vec3 R = vec3(pos.x + offsetPos, getHeight((texCoord + vec2(offsetTex, 0)) * Noise_Freq),             pos.z);
-	vec3 D = vec3(            pos.x, getHeight((texCoord - vec2(0, offsetTex)) * Noise_Freq), pos.z + offsetPos);
-	vec3 U = vec3(            pos.x, getHeight((texCoord + vec2(0, offsetTex)) * Noise_Freq), pos.z - offsetPos);
+	vec3 L = vec3(pos.x - offsetPos, getHeight((texCoord - vec2(offsetTex, 0)) * Noise_Freq).y,             pos.z);
+	vec3 R = vec3(pos.x + offsetPos, getHeight((texCoord + vec2(offsetTex, 0)) * Noise_Freq).y,             pos.z);
+	vec3 D = vec3(            pos.x, getHeight((texCoord - vec2(0, offsetTex)) * Noise_Freq).y, pos.z + offsetPos);
+	vec3 U = vec3(            pos.x, getHeight((texCoord + vec2(0, offsetTex)) * Noise_Freq).y, pos.z - offsetPos);
 
 	vec3 dirX = R - L;
 	vec3 dirZ = D - U;
