@@ -10,6 +10,7 @@ uniform sampler2D texLevel2;
 uniform float Texture_Freq;
 
 in Data {
+	vec4 eye;
 	vec4 position;
 	vec3 normal;
 	vec3 normal_world;
@@ -21,7 +22,28 @@ out vec4 colorOut;
 
 // Funções para determinar o diffuse do pixel
 
-vec4 getTriPlanarBlend(){
+vec4 computeLight(vec4 diffuse) {
+	// Diffuse
+	vec3 l = normalize(vec3(m_view * -l_dir));
+	vec3 n = normalize(DataIn.normal);
+	float intensity = max(0, dot(n, l));
+
+	// Specular
+	const float shininess = 512;
+	vec4 spec = vec4(0);
+	if (intensity > 0.0) {
+		vec3 e = normalize(vec3(DataIn.eye));
+		vec3 h = normalize(l + e);	
+		float spec_intensity = max(dot(h,n), 0.0);
+		spec = vec4(pow(spec_intensity, shininess));
+	}
+	
+	// return the color
+	return max(intensity *  diffuse + spec, diffuse * 0.25);
+	//return max(intensity, 0.25);
+}
+
+vec4 getTriPlanarBlend() {
 	vec3 blending = abs(DataIn.normal_world);
 	blending = normalize(max(blending, 0.00001)); // Force weights to sum to 1.0
 	float b = (blending.x + blending.y + blending.z);
@@ -57,13 +79,11 @@ vec4 getTextureByHight() {
 // Main
 
 void main() {
-	// Light
-	vec3 ld = normalize(vec3(m_view * -l_dir));
-	float intensity = max(0, dot(normalize(DataIn.normal), ld));
-
+	// Texture
 	//vec4 diffuse = getTriPlanarBlend();
 	vec4 diffuse = getTextureByHight();
 
 	// Color
-	colorOut = max(intensity, 0.25) * diffuse;
+	// Light
+	colorOut = computeLight(diffuse);
 }

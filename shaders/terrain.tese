@@ -3,6 +3,7 @@
 layout(triangles, fractional_even_spacing, ccw) in;
 
 uniform	mat4 m_pvm;
+uniform	mat4 m_view;
 uniform	mat3 m_normal;
 
 uniform float Terrain_Length;
@@ -15,6 +16,7 @@ in Data {
 } DataIn[];
 
 out Data {
+	vec4 eye;
 	vec4 position;
 	vec3 normal;
 	vec3 normal_world;
@@ -128,6 +130,9 @@ void main() {
 	pos.y += noise.y;
 	DataOut.position = pos;
 	gl_Position = m_pvm * pos;
+
+	// Eye
+	DataOut.eye = -(m_view * pos);
 
 	// Normal
 	float offsetPos = 5;
