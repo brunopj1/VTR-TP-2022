@@ -3,10 +3,13 @@
 uniform mat4 m_view;
 uniform vec4 l_dir;
 
-uniform sampler2D texLevel0;
-uniform sampler2D texLevel1;
-uniform sampler2D texLevel2;
+uniform sampler2D tex_grass_albedo;
+uniform sampler2D tex_grass_ao;
+uniform sampler2D tex_grass_height;
+uniform sampler2D tex_grass_normal;
+uniform sampler2D tex_grass_roughness;
 
+uniform float Terrain_Height;
 uniform float Texture_Freq;
 
 in Data {
@@ -15,7 +18,6 @@ in Data {
 	vec3 normal;
 	vec3 normal_world;
 	vec2 texCoord;
-	float heightNormalized;
 } DataIn;
 
 out vec4 colorOut;
@@ -43,6 +45,7 @@ vec4 computeLight(vec4 diffuse) {
 	//return max(intensity, 0.25);
 }
 
+// TODO update this
 vec4 getTriPlanarBlend() {
 	vec3 blending = abs(DataIn.normal_world);
 	blending = normalize(max(blending, 0.00001)); // Force weights to sum to 1.0
@@ -50,28 +53,29 @@ vec4 getTriPlanarBlend() {
 	blending /= vec3(b, b, b);
 
 	float factor = Texture_Freq * 0.001;
-	vec3 xaxis = vec3(texture(texLevel1, DataIn.position.yz * factor));
-	vec3 yaxis = vec3(texture(texLevel1, DataIn.position.xz * factor));
-	vec3 zaxis = vec3(texture(texLevel1, DataIn.position.xy * factor));
+	vec3 xaxis = vec3(texture(tex_grass_albedo, DataIn.position.yz * factor));
+	vec3 yaxis = vec3(texture(tex_grass_albedo, DataIn.position.xz * factor));
+	vec3 zaxis = vec3(texture(tex_grass_albedo, DataIn.position.xy * factor));
 
 	vec4 diffuse = vec4(xaxis * blending.x + yaxis * blending.y + zaxis * blending.z, 0);
 	//diffuse = texture(texLevel0, DataIn.position.xz * factor);
 	return diffuse;
 }
 
+// TODO update this
 vec4 getTextureByHight() {
-	float h = DataIn.heightNormalized;
+	float h = DataIn.position.y;
 	vec2 coord = DataIn.texCoord * Texture_Freq;
 	vec4 diffuse;
 
-	if (h < 0.5) {
-		diffuse = texture(texLevel0, coord);
+	if (h < 0.5 * Terrain_Height) {
+		diffuse = texture(tex_grass_albedo, coord);
 	}
-	else if (h < 0.7) {
-		diffuse = texture(texLevel1, coord);
+	else if (h < 0.7 * Terrain_Height) {
+		diffuse = texture(tex_grass_albedo, coord);
 	}
 	else {
-		diffuse = texture(texLevel2, coord);
+		diffuse = texture(tex_grass_albedo, coord);
 	}
 	return diffuse;
 }
@@ -80,10 +84,26 @@ vec4 getTextureByHight() {
 
 void main() {
 	// Texture
-	//vec4 diffuse = getTriPlanarBlend();
-	vec4 diffuse = getTextureByHight();
+	vec2 coord = DataIn.texCoord * Texture_Freq;
+	vec4 albedo = texture(tex_grass_albedo, coord);
 
+	// Light Intensity
+	vec3 l = normalize(vec3(m_view * -l_dir));
+	vec3 n = normalize(DataIn.normal);
+	float intensity = max(0, dot(n, l));
+
+	// Specular Light
+	const float shininess = 512;
+	vec4 spec = vec4(0);
+	if (intensity > 0.0) {
+		vec3 e = normalize(vec3(DataIn.eye));
+		vec3 h = normalize(l + e);	
+		float spec_intensity = max(dot(h,n), 0.0);
+		spec = vec4(pow(spec_intensity, shininess));
+		vec4 roughness = texture(tex_grass_roughness, coord);
+		spec = spec * (vec4(1) - roughness);
+	}
+	
 	// Color
-	// Light
-	colorOut = computeLight(diffuse);
+	colorOut = max(intensity * albedo + spec, albedo * 0.25);
 }
