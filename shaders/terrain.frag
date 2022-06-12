@@ -26,6 +26,7 @@ in Data {
 	vec4 position;
 	vec3 normal;
 	vec3 normal_world;
+	vec3 tangent;
 	vec2 texCoord;
 } DataIn;
 
@@ -94,20 +95,30 @@ vec4 getTextureByHight() {
 // Main
 
 void main() {
-	// Texture Coord
+	// Normalize thee data
 	vec2 coord = DataIn.texCoord * Texture_Freq;
+	vec3 normal = normalize(DataIn.normal);
+	vec3 light_dir = normalize(vec3(m_view * -l_dir));
+
+	// TODO testar com o height map (nao sei se esta bem)
+	// Normal Mapping
+	if (use_normal_mapping > 0) {
+		vec3 tangent = normalize(DataIn.tangent);
+		vec3 bitangent = normalize(cross(normal, tangent));
+		mat3 tbn = mat3(tangent, bitangent, normal);
+		vec3 texNormal = vec3(texture(tex_grass_normal, coord) * 2 - 1);
+		normal = normalize(tbn * texNormal);
+	}
 
 	// Light Intensity
-	vec3 n = normalize(DataIn.normal);
-	vec3 l = normalize(vec3(m_view * -l_dir));
-	float intensity = max(dot(n, l), 0.0);
+	float intensity = max(dot(normal, light_dir), 0.0);
 
 	// Specular
 	vec4 specular = vec4(0.0);
 	if (use_specular_light > 0 && intensity > 0.0) {
-		vec3 e = normalize(vec3(-(m_view * DataIn.position)));
-		vec3 h = normalize(l + e);	
-		float specIntensity = pow(max(dot(h, n), 0.0), 128);
+		vec3 eye = normalize(vec3(-(m_view * DataIn.position)));
+		vec3 half_vec = normalize(light_dir + eye);	
+		float specIntensity = pow(max(dot(half_vec, normal), 0.0), 128);
 		specular = l_color * specIntensity;
 		// Roughness
 		if (use_roughness_mapping > 0) {

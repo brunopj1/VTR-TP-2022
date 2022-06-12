@@ -19,6 +19,7 @@ out Data {
 	vec4 position;
 	vec3 normal;
 	vec3 normal_world;
+	vec3 tangent;
 	vec2 texCoord;
 } DataOut;
 
@@ -142,5 +143,9 @@ void main() {
 
 	DataOut.normal_world = normalize(cross(dirZ, dirX));
 	DataOut.normal = normalize(m_normal * DataOut.normal_world);
+
+	// Tangent
+	vec3 tangent = normalize(cross(vec3(1.0, 0.0, 0.0), DataOut.normal_world));
+	DataOut.tangent = normalize(m_normal * tangent);
 }
 
