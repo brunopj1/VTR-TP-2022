@@ -1,6 +1,6 @@
 #version 410
 
-layout(triangles, equal_spacing, ccw) in;
+layout(triangles, fractional_even_spacing, ccw) in;
 
 uniform	mat4 m_pvm;
 uniform	mat4 m_view;
