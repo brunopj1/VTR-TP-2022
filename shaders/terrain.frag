@@ -1,7 +1,14 @@
 #version 330
 
 uniform mat4 m_view;
+uniform vec4 cam_pos;
+
+uniform float Terrain_Height;
+uniform float Texture_Freq;
+
 uniform vec4 l_dir;
+uniform vec4 l_color;
+uniform vec4 l_ambient;
 
 uniform sampler2D tex_grass_albedo;
 uniform sampler2D tex_grass_ao;
@@ -9,11 +16,13 @@ uniform sampler2D tex_grass_height;
 uniform sampler2D tex_grass_normal;
 uniform sampler2D tex_grass_roughness;
 
-uniform float Terrain_Height;
-uniform float Texture_Freq;
+uniform int use_specular_light;
+uniform int use_ao_mapping;
+uniform int use_height_mapping;
+uniform int use_normal_mapping;
+uniform int use_roughness_mapping;
 
 in Data {
-	vec4 eye;
 	vec4 position;
 	vec3 normal;
 	vec3 normal_world;
@@ -24,6 +33,7 @@ out vec4 colorOut;
 
 // Funções para determinar o diffuse do pixel
 
+/*
 vec4 computeLight(vec4 diffuse) {
 	// Diffuse
 	vec3 l = normalize(vec3(m_view * -l_dir));
@@ -44,6 +54,7 @@ vec4 computeLight(vec4 diffuse) {
 	return max(intensity *  diffuse + spec, diffuse * 0.25);
 	//return max(intensity, 0.25);
 }
+*/
 
 // TODO update this
 vec4 getTriPlanarBlend() {
@@ -83,27 +94,40 @@ vec4 getTextureByHight() {
 // Main
 
 void main() {
-	// Texture
+	// Texture Coord
 	vec2 coord = DataIn.texCoord * Texture_Freq;
-	vec4 albedo = texture(tex_grass_albedo, coord);
 
 	// Light Intensity
-	vec3 l = normalize(vec3(m_view * -l_dir));
 	vec3 n = normalize(DataIn.normal);
-	float intensity = max(0, dot(n, l));
+	vec3 l = normalize(vec3(m_view * -l_dir));
+	float intensity = max(dot(n, l), 0.0);
 
-	// Specular Light
-	const float shininess = 512;
-	vec4 spec = vec4(0);
-	if (intensity > 0.0) {
-		vec3 e = normalize(vec3(DataIn.eye));
+	// Specular
+	vec4 specular = vec4(0.0);
+	if (use_specular_light > 0 && intensity > 0.0) {
+		vec3 e = normalize(vec3(-(m_view * DataIn.position)));
 		vec3 h = normalize(l + e);	
-		float spec_intensity = max(dot(h,n), 0.0);
-		spec = vec4(pow(spec_intensity, shininess));
-		vec4 roughness = texture(tex_grass_roughness, coord);
-		spec = spec * (vec4(1) - roughness);
+		float specIntensity = pow(max(dot(h, n), 0.0), 128);
+		specular = l_color * specIntensity;
+		// Roughness
+		if (use_roughness_mapping > 0) {
+			vec4 roughness = vec4(1) - texture(tex_grass_roughness, coord);
+			specular *= roughness;
+		}
 	}
-	
+
+	// Albedo / Diffuse
+	vec4 diffuse = texture(tex_grass_albedo, coord) * l_color;
+
+	// Ambient Occlusion
+	if (use_ao_mapping > 0) {
+		vec4 ao = texture(tex_grass_ao, coord);
+		diffuse *= ao;
+	}
+
+	// Brightness Boost
+	diffuse = clamp(diffuse * vec4(1.2), 0, 1);
+
 	// Color
-	colorOut = max(intensity * albedo + spec, albedo * 0.25);
+	colorOut = max(intensity * diffuse + specular, diffuse * 0.25);
 }

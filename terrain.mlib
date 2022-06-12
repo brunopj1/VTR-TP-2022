@@ -22,7 +22,7 @@
 			<shader name="terrain">
 				<values>
 
-					<!-- Cena -->
+					<!-- Cena + Viewport -->
 
 					<valueof uniform="m_pvm" 
 							 type="RENDERER" context="CURRENT" 
@@ -39,10 +39,20 @@
 					<valueof uniform="viewport_size" 
 							 type="VIEWPORT" context="CURRENT" 
 							 component="ABSOLUTE_SIZE" />
-							 
+
+					<!-- Luz -->
+
 					<valueof uniform="l_dir" 
 							 type="LIGHT" context="Sun"
 							 component="DIRECTION" />
+
+					<valueof uniform="l_color" 
+							 type="LIGHT" context="Sun"
+							 component="COLOR" />
+
+					<valueof uniform="l_ambient" 
+							 type="LIGHT" context="Sun"
+							 component="AMBIENT" />
 
 					<!-- Camara -->
 
@@ -68,15 +78,15 @@
 							 type="RENDERER" context="CURRENT" 
 							 component="Heightmap_Freq"  />
 
+					<valueof uniform="Texture_Freq" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Texture_Freq"  />
+
 					<valueof uniform="Pixels_Per_Tri" 		
 					         type="RENDERER" context="CURRENT" 
 							 component="Pixels_Per_Tri"  />
 
 					<!-- Texturas -->
-
-					<valueof uniform="Texture_Freq" 		
-							 type="RENDERER" context="CURRENT" 
-							 component="Texture_Freq"  />
 
 					<valueof uniform="tex_grass_albedo"
 							 type="TEXTURE_BINDING" context="CURRENT"
@@ -97,6 +107,30 @@
 					<valueof uniform="tex_grass_roughness"
 							 type="TEXTURE_BINDING" context="CURRENT"
 							 component="UNIT" id=4 />
+					
+					<!-- Materiais -->
+
+					<valueof uniform="use_specular_light" 		
+					         type="RENDERER" context="CURRENT" 
+							 component="use_specular_light"  />
+
+					<valueof uniform="use_ao_mapping" 		
+					         type="RENDERER" context="CURRENT" 
+							 component="use_ao_mapping"  />
+
+					<valueof uniform="use_height_mapping" 		
+					         type="RENDERER" context="CURRENT" 
+							 component="use_height_mapping"  />
+
+					<valueof uniform="use_normal_mapping" 		
+					         type="RENDERER" context="CURRENT" 
+							 component="use_normal_mapping"  />
+
+					<valueof uniform="use_roughness_mapping" 		
+					         type="RENDERER" context="CURRENT" 
+							 component="use_roughness_mapping"  />
+					
+
 				</values>
 			</shader>
 			<textures>
