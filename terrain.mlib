@@ -5,7 +5,7 @@
 		<texture name="tex_grass_ao"        filename="./materials/metal/ao.png"        mipmap=true />
 		<texture name="tex_grass_height"    filename="./materials/metal/height.png"    mipmap=true />
 		<texture name="tex_grass_normal"    filename="./materials/metal/normal.png"    mipmap=true />
-		<!--texture name="tex_grass_normal"    filename="./materials/teste.png"    mipmap=true /-->
+		<!--texture name="tex_grass_normal"    filename="./materials/teste2.png"    mipmap=true /-->
 		<texture name="tex_grass_roughness" filename="./materials/metal/roughness.png" mipmap=true />
 	</textures>
 

@@ -95,7 +95,7 @@ vec4 getTextureByHight() {
 // Main
 
 void main() {
-	// Normalize thee data
+	// Normalize the data
 	vec2 coord = DataIn.texCoord * Texture_Freq;
 	vec3 normal = normalize(DataIn.normal);
 	vec3 light_dir = normalize(vec3(m_view * -l_dir));
@@ -116,7 +116,7 @@ void main() {
 	// Specular
 	vec4 specular = vec4(0.0);
 	if (use_specular_light > 0 && intensity > 0.0) {
-		vec3 eye = normalize(vec3(-(m_view * DataIn.position)));
+		vec3 eye = normalize(vec3(- m_view * DataIn.position));
 		vec3 half_vec = normalize(light_dir + eye);	
 		float specIntensity = pow(max(dot(half_vec, normal), 0.0), 128);
 		specular = l_color * specIntensity;
