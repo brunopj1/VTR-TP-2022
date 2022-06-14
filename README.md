@@ -10,6 +10,8 @@
 
 - Adaptar o blending de texturas e triplanar blend para funcionar com os materiais
 
+- Ao mudar a length do terreno a intensidade da luz e a especular parecem mudar
+
 ## Se tivermos tempo
 
 - Tentar melhorar o triplanar mapping

@@ -14,10 +14,9 @@ out Data {
 void main () {
 	// Calculate the camera offset
 	vec4 cam_offset = vec4(cam_pos.x, 0, cam_pos.z, 0);
-	DataOut.pos = position * Terrain_Length + cam_offset;
+	// Offset the position / texcoord
+	DataOut.pos = vec4(vec3(position * Terrain_Length + cam_offset), 1);
 	DataOut.pos.w = 1;
-	// Calculate the camera offset for the texCoord
 	DataOut.texCoord = DataOut.pos.xz / 1000.0;
-	// Position
 	gl_Position = m_pvm * DataOut.pos;
 }
