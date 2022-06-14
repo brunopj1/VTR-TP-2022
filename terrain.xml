@@ -4,7 +4,7 @@
 		<constants>
 			<constant name="Terrain_Length" value=2500 />
 			<constant name="Terrain_Chunks" value=15/>
-			<constant name="Terrain_Height" value=1000/>
+			<constant name="Terrain_Height" value=2000/>
 		</constants>
 		
 		<attributes>
@@ -12,7 +12,7 @@
 			<attribute name="Terrain_Length"        data="FLOAT" type="RENDERER" value=Terrain_Length />
 			<attribute name="Terrain_Chunks"        data="INT"   type="RENDERER" value=Terrain_Chunks />
 			<attribute name="Terrain_Height"        data="FLOAT" type="RENDERER" value=Terrain_Height />
-			<attribute name="Heightmap_Freq"        data="FLOAT" type="RENDERER" value=3 />
+			<attribute name="Heightmap_Freq"        data="FLOAT" type="RENDERER" value=1.5 />
 			<attribute name="Texture_Freq"          data="FLOAT" type="RENDERER" value=25 />
 			<attribute name="Pixels_Per_Tri"        data="FLOAT" type="RENDERER" value=5 />
 			<!-- Settings dos Materiais -->
@@ -25,7 +25,7 @@
 
 		<scenes>
 			<scene name="Scene">
-				<geometry name="Grid" type="GRID" LENGTH=Terrain_Length  DIVISIONS=Terrain_Chunks />
+				<geometry name="Grid" type="GRID" LENGTH=1  DIVISIONS=Terrain_Chunks />
 			</scene>
 		</scenes>
 		
@@ -82,14 +82,16 @@
 		<window label="Terrain Settings">
 			<var label="Pixels_Per_Tri"        type="RENDERER" context="CURRENT" component="Pixels_Per_Tri" 
 				def="min=1 max=50 step=0.1"/>
+			<var label="Terrain_Length"        type="RENDERER" context="CURRENT" component="Terrain_Length" 
+				def="min=500 max=10000 step=0.1"/>
 			<var label="Terrain_Height"        type="RENDERER" context="CURRENT" component="Terrain_Height" 
-				def="min=0 max=2000 step=0.1"/>
+				def="min=0 max=5000 step=0.1"/>
 			<var label="Heightmap_Freq"        type="RENDERER" context="CURRENT" component="Heightmap_Freq" 
 				def="min=0.01 max=20 step=0.01"/>
 			<var label="Texture_Freq"          type="RENDERER" context="CURRENT" component="Texture_Freq" 
 				def="min=0.01 max=50 step=0.01"/>
 		</window>
-		<!-- MAteriais -->
+		<!-- Materiais -->
 		<window label="Material Settings">
 			<var label="use_specular_light"    type="RENDERER" context="CURRENT" component="use_specular_light" 
 				def="min=0 max=1 step=1"/>

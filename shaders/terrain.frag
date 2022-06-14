@@ -32,8 +32,6 @@ in Data {
 
 out vec4 colorOut;
 
-// Funções para determinar o diffuse do pixel
-
 /*
 vec4 computeLight(vec4 diffuse) {
 	// Diffuse
@@ -57,7 +55,7 @@ vec4 computeLight(vec4 diffuse) {
 }
 */
 
-// TODO update this
+/* TODO update this
 vec4 getTriPlanarBlend() {
 	vec3 blending = abs(DataIn.normal_world);
 	blending = normalize(max(blending, 0.00001)); // Force weights to sum to 1.0
@@ -73,8 +71,9 @@ vec4 getTriPlanarBlend() {
 	//diffuse = texture(texLevel0, DataIn.position.xz * factor);
 	return diffuse;
 }
+*/
 
-// TODO update this
+/* TODO update this
 vec4 getTextureByHight() {
 	float h = DataIn.position.y;
 	vec2 coord = DataIn.texCoord * Texture_Freq;
@@ -91,6 +90,7 @@ vec4 getTextureByHight() {
 	}
 	return diffuse;
 }
+*/
 
 // Main
 

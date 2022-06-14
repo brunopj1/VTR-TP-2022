@@ -83,17 +83,24 @@ float voronoiNoise(vec2 point) {
 // Noise
 
 float getNoise_Mountains(vec2 pos) {
-	float v = 0.5000 * voronoiNoise(pos);
-	pos *= 2;
-	v += 0.2500 * voronoiNoise(pos);
-	pos *= 2;
-	v += 0.1250 * voronoiNoise(pos);
-	pos *= 2;
-	v += 0.1250 * gradientNoise(pos);
-	pos *= 2;
-	v += 0.0625 * gradientNoise(pos);
+	float v = 0;
+	v += 10 * voronoiNoise(pos);
 
-	return v;
+	pos *= 2;
+	v += 5 * voronoiNoise(pos);
+
+	pos *= 2;
+	v += 2 * voronoiNoise(pos);
+
+	pos *= 2;
+	v += 1 * gradientNoise(pos);
+
+	pos *= 2;
+	v += 1 * gradientNoise(pos);
+
+	// Dividir pela soma dos pesos
+	// Aplicar um expoente para reduzir a elevação fora dos picos
+	return pow(v / 19, 4);
 }
 
 float getNoise_Plains(vec2 pos) {
