@@ -2,13 +2,15 @@
 
 ## Importante
 
-- Colocar a tesselacao a zero quando nao se ve o triangulo
+- Colocar a tesselacao a zero quando nao se ve o triangulo (talvez funcione com VFC de AABB's)
 
 - Blending de texturas (altura / e no mesmo)
 
 - Adaptar o blending de texturas e triplanar blend para funcionar com os materiais
 
 - Ao mudar a length do terreno a intensidade da luz e a especular parecem mudar
+
+- Adicionar uma skybox (e possivelmente adicionar nevoeiro baseado na distancia)
 
 ## Se tivermos tempo
 
