@@ -75,6 +75,10 @@
 							 type="RENDERER" context="CURRENT" 
 							 component="Terrain_Height"  />
 
+					<valueof uniform="Terrain_Chunks" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Terrain_Chunks"  />
+
 					<valueof uniform="Heightmap_Freq" 		
 							 type="RENDERER" context="CURRENT" 
 							 component="Heightmap_Freq"  />

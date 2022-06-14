@@ -4,8 +4,6 @@
 
 - Colocar a tesselacao a zero quando nao se ve o triangulo
 
-- Corrigir as normais (fazer a translação de chunks e não do terreno inteiro)
-
 - Blending de texturas (altura / e no mesmo)
 
 - Adaptar o blending de texturas e triplanar blend para funcionar com os materiais

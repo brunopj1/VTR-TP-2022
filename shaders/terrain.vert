@@ -3,6 +3,7 @@
 uniform	mat4 m_pvm;
 uniform vec4 cam_pos;
 uniform float Terrain_Length;
+uniform int Terrain_Chunks;
 
 in vec4 position;
 
@@ -13,10 +14,11 @@ out Data {
 
 void main () {
 	// Calculate the camera offset
-	vec4 cam_offset = vec4(cam_pos.x, 0, cam_pos.z, 0);
+	float chunk_size = Terrain_Length / Terrain_Chunks;
+	vec2 cam_offset = floor(cam_pos.xz / chunk_size) * chunk_size;
 	// Offset the position / texcoord
-	DataOut.pos = vec4(vec3(position * Terrain_Length + cam_offset), 1);
-	DataOut.pos.w = 1;
+	vec2 pos = position.xz * Terrain_Length + cam_offset;
+	DataOut.pos = vec4(pos.x, 0, pos.y, 1);
 	DataOut.texCoord = DataOut.pos.xz / 1000.0;
 	gl_Position = m_pvm * DataOut.pos;
 }
