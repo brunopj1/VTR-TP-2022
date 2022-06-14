@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <materialLib name="Terrain">
 	<textures>
+		<texture name="tex_skybox"          filename="./textures/sky.jpg"              mipmap=true />
 		<texture name="tex_grass_albedo"    filename="./materials/metal/albedo.png"    mipmap=true />
 		<texture name="tex_grass_ao"        filename="./materials/metal/ao.png"        mipmap=true />
 		<texture name="tex_grass_height"    filename="./materials/metal/height.png"    mipmap=true />
@@ -14,8 +15,19 @@
 											tc = "shaders/terrain.tesc"
 											te = "shaders/terrain.tese"
 											vs = "shaders/terrain.vert" />
+
+		<shader name="skybox"
+											ps = "shaders/skybox.frag"
+											vs = "shaders/skybox.vert" />
 											
 	</shaders>
+
+	<states>
+		<state name="Cull_Front">
+			<CULL_FACE value="TRUE" />
+			<CULL_TYPE value="FRONT" />
+		</state>
+	</states>
 	
 	<materials>
 
@@ -144,6 +156,35 @@
 				<texture name="tex_grass_height"    UNIT=2 />
 				<texture name="tex_grass_normal"    UNIT=3 />
 				<texture name="tex_grass_roughness" UNIT=4 />
+			</textures>
+		</material>
+
+		<material name="skybox">
+			<shader name="skybox">
+				<values>
+				
+					<!-- Cena + Viewport -->
+
+					<valueof uniform="m_pvm" 
+							 type="RENDERER" context="CURRENT" 
+							 component="PROJECTION_VIEW_MODEL" />
+
+					<!-- Camara -->
+
+					<valueof uniform="cam_pos" 		
+					         type="CAMERA" context="CURRENT" 
+							 component="POSITION"  />
+							 
+					<!-- Texturas -->
+
+					<valueof uniform="tex_skybox"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=0 />
+				</values>
+			</shader>
+			<state name="Cull_Front" />
+			<textures>
+				<texture name="tex_skybox" UNIT=0 />
 			</textures>
 		</material>
 	</materials>

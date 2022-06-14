@@ -10,7 +10,7 @@
 
 - Ao mudar a length do terreno a intensidade da luz e a especular parecem mudar
 
-- Adicionar uma skybox (e possivelmente adicionar nevoeiro baseado na distancia)
+- Arranjar uma imagem de melhor qualidade para a skybox
 
 ## Se tivermos tempo
 

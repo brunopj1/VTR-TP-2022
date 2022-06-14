@@ -27,6 +27,11 @@
 			<scene name="Scene">
 				<geometry name="Grid" type="GRID" LENGTH=1  DIVISIONS=Terrain_Chunks />
 			</scene>
+			<scene name="Skybox">
+				<geometry name = "Sphere" type="SPHERE" SLICES=15 STACKS=15 >
+					<SCALE x=4500 y=4500 z=4500 />
+				</geometry>       
+			</scene>
 		</scenes>
 		
 		<viewports>
@@ -61,7 +66,18 @@
 	
 	<pipelines>
 		<pipeline name="main" default="true">
-			<pass class="default" name="pass1">
+			<pass name="skybox_pass">
+				<scenes>
+					<scene name="Skybox" />
+				</scenes>
+				<camera name="MainCamera" />
+				<materialMaps>
+					<map fromMaterial="*" toMaterial="skybox" toLibrary="Terrain" />
+				</materialMaps>
+			</pass>
+			<pass class="default" name="terrain_pass">
+				<COLOR_CLEAR value=false />
+				<DEPTH_CLEAR value=false />
 				<scenes>
 					<scene name="Scene" />
 				</scenes>
