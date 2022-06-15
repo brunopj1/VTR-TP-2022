@@ -8,7 +8,9 @@
 
 - Adaptar o blending de texturas e triplanar blend para funcionar com os materiais
 
-- Arranjar uma imagem de melhor qualidade para a skybox
+- Tentar corrigir as arestas do cubemap
+
+- O normal mapping está a inverter as normais
 
 ## Se tivermos tempo
 

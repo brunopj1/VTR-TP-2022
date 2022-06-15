@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
 <materialLib name="Terrain">
 	<textures>
-		<texture name="tex_skybox"          filename="./textures/sky.jpg"              mipmap=true />
-		<texture name="tex_grass_albedo"    filename="./materials/metal/albedo.png"    mipmap=true />
-		<texture name="tex_grass_ao"        filename="./materials/metal/ao.png"        mipmap=true />
-		<texture name="tex_grass_height"    filename="./materials/metal/height.png"    mipmap=true />
-		<texture name="tex_grass_normal"    filename="./materials/metal/normal.png"    mipmap=true />
+		<texture name="tex_skybox"          filename="./textures/FluffballDay2k.png" mipmap=true />
+		<texture name="tex_grass_albedo"    filename="./materials/grass/albedo.png"    mipmap=true />
+		<texture name="tex_grass_ao"        filename="./materials/grass/ao.png"        mipmap=true />
+		<texture name="tex_grass_height"    filename="./materials/grass/height.png"    mipmap=true />
+		<texture name="tex_grass_normal"    filename="./materials/grass/normal.png"    mipmap=true />
 		<!--texture name="tex_grass_normal"    filename="./materials/teste2.png"    mipmap=true /-->
-		<texture name="tex_grass_roughness" filename="./materials/metal/roughness.png" mipmap=true />
+		<texture name="tex_grass_roughness" filename="./materials/grass/roughness.png" mipmap=true />
 	</textures>
 
 	<shaders>

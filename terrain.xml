@@ -28,9 +28,7 @@
 				<geometry name="Grid" type="GRID" LENGTH=1  DIVISIONS=Terrain_Chunks />
 			</scene>
 			<scene name="Skybox">
-				<geometry name = "Sphere" type="SPHERE" SLICES=15 STACKS=15 >
-					<SCALE x=4500 y=4500 z=4500 />
-				</geometry>       
+				<file name="./cubemap/cube.obj" />
 			</scene>
 		</scenes>
 		
@@ -55,7 +53,7 @@
 		
 		<lights>
 			<light name="Sun">
-				<DIRECTION x=8.0 y=-5.5 z=2.6 />
+				<DIRECTION x=0 y=-1 z=0 />
 			</light>
 		</lights>
 		
@@ -71,9 +69,12 @@
 					<scene name="Skybox" />
 				</scenes>
 				<camera name="MainCamera" />
-				<materialMaps>
-					<map fromMaterial="*" toMaterial="skybox" toLibrary="Terrain" />
-				</materialMaps>
+				<injectionMaps>
+					<map toMaterial="*">
+						<state name="Cull_Front" fromLibrary="Terrain" />
+						<shader fromMaterial="skybox" fromLibrary="Terrain" />
+					</map>
+				</injectionMaps>
 			</pass>
 			<pass class="default" name="terrain_pass">
 				<COLOR_CLEAR value=false />

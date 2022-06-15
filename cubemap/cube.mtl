@@ -1,0 +1,17 @@
+newmtl front
+	map_Kd textures\pz.png
+
+newmtl back
+	map_Kd textures\nz.png
+
+newmtl right
+	map_Kd textures\px.png
+	
+newmtl top
+	map_Kd textures\py.png
+	
+newmtl left
+	map_Kd textures\nx.png
+	
+newmtl bottom
+	map_Kd textures\ny.png
