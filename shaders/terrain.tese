@@ -138,7 +138,7 @@ void main() {
 
 	// Normal
 	float offsetPos = 5;
-	float offsetTex = offsetPos / Terrain_Length;
+	float offsetTex = offsetPos / 1000.0;
 	
 	vec3 L = vec3(pos.x - offsetPos, getHeight((texCoord - vec2(offsetTex, 0)) * Heightmap_Freq),             pos.z);
 	vec3 R = vec3(pos.x + offsetPos, getHeight((texCoord + vec2(offsetTex, 0)) * Heightmap_Freq),             pos.z);
