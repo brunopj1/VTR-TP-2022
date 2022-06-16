@@ -10,6 +10,6 @@ out vec2 texCoord;
 
 void main () {
     texCoord = texCoord0;
-    vec3 pos = position.xyz * 2000 + cam_pos.xyz;
+    vec3 pos = position.xyz * 5000 + cam_pos.xyz;
     gl_Position = m_pvm * vec4(pos, 1);
 }
