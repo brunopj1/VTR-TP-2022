@@ -49,37 +49,37 @@ void main() {
 		// | \  \ |
 		// 0--1   1
 
+		ivec3 idx_outer_tess;
+		ivec2 aresta1;
+		ivec2 aresta2;
+		ivec2 aresta3;
+
 		// Triangulo Esquerdo
 		if (DataIn[1].pos.x > DataIn[2].pos.x) { 
-
-			// Calcular a tesselacao interna e da diagonal do chunk
-			float tes = calculateTes(DataIn[2].pos, DataIn[1].pos);
-			gl_TessLevelInner[0] = tes;
-			gl_TessLevelOuter[0] = tes;
-
-			// Calcular a tesselacao externa (dir x)
-			tes = calculateTes(DataIn[0].pos, DataIn[2].pos);
-			gl_TessLevelOuter[1] = tes;
-
-			// Calcular a tesselacao externa (dir z)
-			tes = calculateTes(DataIn[0].pos, DataIn[1].pos);
-			gl_TessLevelOuter[2] = tes;
+			idx_outer_tess = ivec3(0, 1, 2);
+			aresta1 = ivec2(2, 1);
+			aresta2 = ivec2(0, 2);
+			aresta3 = ivec2(0, 1);
 		}	
 		// Triangulo Direito
 		else { 
-
-			// Calcular a tesselacao interna e da diagonal do chunk
-			float tes = calculateTes(DataIn[0].pos, DataIn[1].pos);
-			gl_TessLevelInner[0] = tes;
-			gl_TessLevelOuter[2] = tes;
-
-			// Calcular a tesselacao (dir x)
-			tes = calculateTes(DataIn[1].pos, DataIn[2].pos);
-			gl_TessLevelOuter[0] = tes;
-
-			// Calcular a tesselacao (dir z)
-			tes = calculateTes(DataIn[0].pos, DataIn[2].pos);
-			gl_TessLevelOuter[1] = tes;
+			idx_outer_tess = ivec3(2, 0, 1);
+			aresta1 = ivec2(0, 1);
+			aresta2 = ivec2(1, 2);
+			aresta3 = ivec2(0, 2);
 		}
+
+		// Calcular a tesselacao interna e da diagonal do chunk
+		float tes = calculateTes(DataIn[aresta1.x].pos, DataIn[aresta1.y].pos);
+		gl_TessLevelInner[0] = tes;
+		gl_TessLevelOuter[idx_outer_tess.x] = tes;
+
+		// Calcular a tesselacao externa (dir x)
+		tes = calculateTes(DataIn[aresta2.x].pos, DataIn[aresta2.y].pos);
+		gl_TessLevelOuter[idx_outer_tess.y] = tes;
+
+		// Calcular a tesselacao externa (dir z)
+		tes = calculateTes(DataIn[aresta3.x].pos, DataIn[aresta3.y].pos);
+		gl_TessLevelOuter[idx_outer_tess.z] = tes;
 	}
 }
