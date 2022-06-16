@@ -16,11 +16,11 @@
 			<attribute name="Texture_Freq"          data="FLOAT" type="RENDERER" value=25 />
 			<attribute name="Pixels_Per_Tri"        data="FLOAT" type="RENDERER" value=5 />
 			<!-- Settings dos Materiais -->
-			<attribute name="use_specular_light"    data="INT"   type="RENDERER" value=1 />
-			<attribute name="use_ao_mapping"        data="INT"   type="RENDERER" value=1 />
-			<attribute name="use_height_mapping"    data="INT"   type="RENDERER" value=1 />
-			<attribute name="use_normal_mapping"    data="INT"   type="RENDERER" value=1 />
-			<attribute name="use_roughness_mapping" data="INT"   type="RENDERER" value=1 />
+			<attribute name="use_specular_light"    data="INT"   type="RENDERER" value=0 />
+			<attribute name="use_ao_mapping"        data="INT"   type="RENDERER" value=0 />
+			<attribute name="use_height_mapping"    data="INT"   type="RENDERER" value=0 />
+			<attribute name="use_normal_mapping"    data="INT"   type="RENDERER" value=0 />
+			<attribute name="use_roughness_mapping" data="INT"   type="RENDERER" value=0 />
 		</attributes>
 
 		<scenes>
@@ -53,7 +53,7 @@
 		
 		<lights>
 			<light name="Sun">
-				<DIRECTION x=0 y=-1 z=0 />
+				<DIRECTION x=1 y=-5 z=8 />
 			</light>
 		</lights>
 		
@@ -64,7 +64,7 @@
 	
 	<pipelines>
 		<pipeline name="main" default="true">
-			<pass name="skybox_pass">
+			<pass name="skybox pass">
 				<scenes>
 					<scene name="Skybox" />
 				</scenes>
@@ -76,7 +76,7 @@
 					</map>
 				</injectionMaps>
 			</pass>
-			<pass class="default" name="terrain_pass">
+			<pass class="default" name="terrain pass">
 				<COLOR_CLEAR value=false />
 				<DEPTH_CLEAR value=false />
 				<scenes>
@@ -90,6 +90,20 @@
 					<map fromMaterial="*" toMaterial="terrain" toLibrary="Terrain" />
 				</materialMaps>
 			</pass>
+			<!--pass class="default" name="show normals">
+				<COLOR_CLEAR value=false />
+				<DEPTH_CLEAR value=false />
+				<scenes>
+					<scene name="Scene" />
+				</scenes>
+				<camera name="MainCamera" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<materialMaps>
+					<map fromMaterial="*" toMaterial="terrain_normals" toLibrary="Terrain" />
+				</materialMaps>
+			</pass-->
 		</pipeline>
 
 	</pipelines>

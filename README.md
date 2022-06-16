@@ -10,8 +10,6 @@
 
 - Tentar corrigir as arestas do cubemap
 
-- O normal mapping está a inverter as normais
-
 ## Se tivermos tempo
 
 - Tentar melhorar o triplanar mapping

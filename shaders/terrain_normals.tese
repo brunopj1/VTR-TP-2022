@@ -16,7 +16,6 @@ in Data {
 } DataIn[];
 
 out Data {
-	vec4 position;
 	vec3 normal;
 	vec3 tangent;
 	vec3 bitangent;
@@ -120,7 +119,7 @@ void main() {
 		DataIn[0].texCoord * gl_TessCoord.x +
 		DataIn[1].texCoord * gl_TessCoord.y +
 		DataIn[2].texCoord * gl_TessCoord.z;
-		
+
 	DataOut.texCoord = texCoord;
 
 	// Noise
@@ -133,26 +132,20 @@ void main() {
 		DataIn[2].pos * gl_TessCoord.z;
 
 	pos.y += noise;
-	DataOut.position = pos;
-	gl_Position = m_pvm * pos;
+	gl_Position = pos;
 
 	// Normal
-	float offsetPos = 1;
-	
-	vec2 posL = pos.xz - vec2(offsetPos, 0); vec3 L = vec3(posL.x, getHeight(posL * 0.001 * Heightmap_Freq), posL.y);
-	vec2 posR = pos.xz + vec2(offsetPos, 0); vec3 R = vec3(posR.x, getHeight(posR * 0.001 * Heightmap_Freq), posR.y);
-	vec2 posD = pos.xz + vec2(0, offsetPos); vec3 D = vec3(posD.x, getHeight(posD * 0.001 * Heightmap_Freq), posD.y);
-	vec2 posU = pos.xz - vec2(0, offsetPos); vec3 U = vec3(posU.x, getHeight(posU * 0.001 * Heightmap_Freq), posU.y);
-	
+	vec2 posL = pos.xz - vec2(1, 0); vec3 L = vec3(posL.x, getHeight(posL * 0.001 * Heightmap_Freq), posL.y);
+	vec2 posR = pos.xz + vec2(1, 0); vec3 R = vec3(posR.x, getHeight(posR * 0.001 * Heightmap_Freq), posR.y);
+	vec2 posD = pos.xz + vec2(0, 1); vec3 D = vec3(posD.x, getHeight(posD * 0.001 * Heightmap_Freq), posD.y);
+	vec2 posU = pos.xz - vec2(0, 1); vec3 U = vec3(posU.x, getHeight(posU * 0.001 * Heightmap_Freq), posU.y);
+
 	vec3 dirX = R - L;
 	vec3 dirZ = D - U;
 
-	vec3 normal_world = normalize(cross(dirZ, dirX));
-	DataOut.normal = normalize(m_normal * normal_world);
+	DataOut.normal = normalize(cross(dirZ, dirX));
 
 	// Tangent + Bitangent
-	vec3 tangent_world = normalize(dirX);
-	DataOut.tangent = normalize(m_normal * tangent_world);
-	vec3 bitangent_world = normalize(cross(normal_world, tangent_world));
-	DataOut.bitangent = normalize(m_normal * bitangent_world);
+	DataOut.tangent = normalize(dirX);
+	DataOut.bitangent = cross(DataOut.normal, DataOut.tangent);
 }

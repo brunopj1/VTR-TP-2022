@@ -20,5 +20,5 @@ void main () {
 	vec2 pos = position.xz * Terrain_Length + cam_offset;
 	DataOut.pos = vec4(pos.x, 0, pos.y, 1);
 	DataOut.texCoord = DataOut.pos.xz * 0.001;
-	gl_Position = m_pvm * DataOut.pos;
+	gl_Position = DataOut.pos;
 }
