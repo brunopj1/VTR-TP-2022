@@ -50,6 +50,10 @@
 					<valueof uniform="cam_pos" 		
 					         type="CAMERA" context="CURRENT" 
 							 component="POSITION"  />
+
+					<valueof uniform="cam_far" 		
+					         type="CAMERA" context="CURRENT" 
+							 component="FAR"  />
 							 
 					<!-- Texturas -->
 
@@ -58,8 +62,8 @@
 							 component="UNIT" id=0 />
 				</values>
 			</shader>
-			<state name="Cull_Front" />
 			<textures>
+				<!-- Independentemente da textura que eu coloque aqui vai ficar as que estao no cube.mtl -->
 				<texture name="tex_grass_albedo" UNIT=0 />
 			</textures>
 		</material>

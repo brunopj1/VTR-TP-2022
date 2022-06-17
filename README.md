@@ -8,8 +8,6 @@
 
 - Adaptar o blending de texturas e triplanar blend para funcionar com os materiais
 
-- Tentar corrigir as arestas do cubemap
-
 ## Se tivermos tempo
 
 - Tentar melhorar o triplanar mapping
