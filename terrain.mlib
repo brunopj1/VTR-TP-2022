@@ -77,7 +77,7 @@
 					<valueof uniform="m_pvm" 
 							 type="RENDERER" context="CURRENT" 
 							 component="PROJECTION_VIEW_MODEL" />
-							 
+							
 					<valueof uniform="m_view" 
 							 type="RENDERER" context="CURRENT" 
 							 component="VIEW" />
