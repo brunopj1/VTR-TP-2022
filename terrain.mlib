@@ -3,9 +3,13 @@
 	<textures>
 		<texture name="tex_grass_albedo"    filename="./materials/metal/albedo.png"    mipmap=true />
 		<texture name="tex_grass_ao"        filename="./materials/metal/ao.png"        mipmap=true />
-		<texture name="tex_grass_height"    filename="./materials/metal/height.png"    mipmap=true />
 		<texture name="tex_grass_normal"    filename="./materials/metal/normal.png"    mipmap=true />
 		<texture name="tex_grass_roughness" filename="./materials/metal/roughness.png" mipmap=true />
+
+		<texture name="tex_dirt_albedo"     filename="./materials/dirt/albedo.png"     mipmap=true />
+		<texture name="tex_dirt_ao"         filename="./materials/dirt/ao.png"         mipmap=true />
+		<texture name="tex_dirt_normal"     filename="./materials/dirt/normal.png"     mipmap=true />
+		<texture name="tex_dirt_roughness"  filename="./materials/dirt/roughness.png"  mipmap=true />
 	</textures>
 
 	<shaders>
@@ -185,28 +189,6 @@
 					<valueof uniform="Noise_5_Weight" 		
 							 type="RENDERER" context="CURRENT" 
 							 component="Noise_5_Weight"  />
-
-					<!-- Texturas -->
-
-					<valueof uniform="tex_grass_albedo"
-							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=0 />
-
-					<valueof uniform="tex_grass_ao"
-							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=1 />
-
-					<valueof uniform="tex_grass_height"
-							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=2 />
-
-					<valueof uniform="tex_grass_normal"
-							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=3 />
-
-					<valueof uniform="tex_grass_roughness"
-							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=4 />
 					
 					<!-- Materiais -->
 
@@ -218,10 +200,6 @@
 					         type="RENDERER" context="CURRENT" 
 							 component="use_ao_mapping"  />
 
-					<valueof uniform="use_height_mapping" 		
-					         type="RENDERER" context="CURRENT" 
-							 component="use_height_mapping"  />
-
 					<valueof uniform="use_normal_mapping" 		
 					         type="RENDERER" context="CURRENT" 
 							 component="use_normal_mapping"  />
@@ -230,15 +208,51 @@
 					         type="RENDERER" context="CURRENT" 
 							 component="use_roughness_mapping"  />
 					
+					<!-- Texturas -->
+
+					<valueof uniform="tex_grass_albedo"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=0 />
+
+					<valueof uniform="tex_grass_ao"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=1 />
+
+					<valueof uniform="tex_grass_normal"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=2 />
+
+					<valueof uniform="tex_grass_roughness"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=3 />
+
+					<valueof uniform="tex_dirt_albedo"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=4 />
+
+					<valueof uniform="tex_dirt_ao"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=5 />
+
+					<valueof uniform="tex_dirt_normal"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=6 />
+
+					<valueof uniform="tex_dirt_roughness"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=7 />
 
 				</values>
 			</shader>
 			<textures>
 				<texture name="tex_grass_albedo"    UNIT=0 />
 				<texture name="tex_grass_ao"        UNIT=1 />
-				<texture name="tex_grass_height"    UNIT=2 />
-				<texture name="tex_grass_normal"    UNIT=3 />
-				<texture name="tex_grass_roughness" UNIT=4 />
+				<texture name="tex_grass_normal"    UNIT=2 />
+				<texture name="tex_grass_roughness" UNIT=3 />
+				<texture name="tex_grass_albedo"    UNIT=4 />
+				<texture name="tex_grass_ao"        UNIT=5 />
+				<texture name="tex_grass_normal"    UNIT=6 />
+				<texture name="tex_grass_roughness" UNIT=7 />
 			</textures>
 		</material>
 		
@@ -359,28 +373,6 @@
 					<valueof uniform="Noise_5_Weight" 		
 							 type="RENDERER" context="CURRENT" 
 							 component="Noise_5_Weight"  />
-
-					<!-- Texturas -->
-
-					<valueof uniform="tex_grass_albedo"
-							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=0 />
-
-					<valueof uniform="tex_grass_ao"
-							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=1 />
-
-					<valueof uniform="tex_grass_height"
-							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=2 />
-
-					<valueof uniform="tex_grass_normal"
-							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=3 />
-
-					<valueof uniform="tex_grass_roughness"
-							 type="TEXTURE_BINDING" context="CURRENT"
-							 component="UNIT" id=4 />
 					
 					<!-- Materiais -->
 
@@ -392,10 +384,6 @@
 					         type="RENDERER" context="CURRENT" 
 							 component="use_ao_mapping"  />
 
-					<valueof uniform="use_height_mapping" 		
-					         type="RENDERER" context="CURRENT" 
-							 component="use_height_mapping"  />
-
 					<valueof uniform="use_normal_mapping" 		
 					         type="RENDERER" context="CURRENT" 
 							 component="use_normal_mapping"  />
@@ -404,15 +392,51 @@
 					         type="RENDERER" context="CURRENT" 
 							 component="use_roughness_mapping"  />
 					
+					<!-- Texturas -->
+
+					<valueof uniform="tex_grass_albedo"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=0 />
+
+					<valueof uniform="tex_grass_ao"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=1 />
+
+					<valueof uniform="tex_grass_normal"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=2 />
+
+					<valueof uniform="tex_grass_roughness"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=3 />
+
+					<valueof uniform="tex_dirt_albedo"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=4 />
+
+					<valueof uniform="tex_dirt_ao"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=5 />
+
+					<valueof uniform="tex_dirt_normal"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=6 />
+
+					<valueof uniform="tex_dirt_roughness"
+							 type="TEXTURE_BINDING" context="CURRENT"
+							 component="UNIT" id=7 />
 
 				</values>
 			</shader>
 			<textures>
 				<texture name="tex_grass_albedo"    UNIT=0 />
 				<texture name="tex_grass_ao"        UNIT=1 />
-				<texture name="tex_grass_height"    UNIT=2 />
-				<texture name="tex_grass_normal"    UNIT=3 />
-				<texture name="tex_grass_roughness" UNIT=4 />
+				<texture name="tex_grass_normal"    UNIT=2 />
+				<texture name="tex_grass_roughness" UNIT=3 />
+				<texture name="tex_grass_albedo"    UNIT=4 />
+				<texture name="tex_grass_ao"        UNIT=5 />
+				<texture name="tex_grass_normal"    UNIT=6 />
+				<texture name="tex_grass_roughness" UNIT=7 />
 			</textures>
 		</material>
 

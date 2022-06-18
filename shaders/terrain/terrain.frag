@@ -12,13 +12,11 @@ uniform vec4 l_ambient;
 
 uniform sampler2D tex_grass_albedo;
 uniform sampler2D tex_grass_ao;
-uniform sampler2D tex_grass_height;
 uniform sampler2D tex_grass_normal;
 uniform sampler2D tex_grass_roughness;
 
 uniform int use_specular_light;
 uniform int use_ao_mapping;
-uniform int use_height_mapping;
 uniform int use_normal_mapping;
 uniform int use_roughness_mapping;
 

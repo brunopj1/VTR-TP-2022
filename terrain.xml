@@ -30,7 +30,6 @@
 			<!-- Settings dos Materiais -->
 			<attribute name="use_specular_light"    data="INT"   type="RENDERER" value=0 />
 			<attribute name="use_ao_mapping"        data="INT"   type="RENDERER" value=0 />
-			<attribute name="use_height_mapping"    data="INT"   type="RENDERER" value=0 />
 			<attribute name="use_normal_mapping"    data="INT"   type="RENDERER" value=0 />
 			<attribute name="use_roughness_mapping" data="INT"   type="RENDERER" value=0 />
 		</attributes>
@@ -167,8 +166,6 @@
 			<var label="use_specular_light"    type="RENDERER" context="CURRENT" component="use_specular_light" 
 				def="min=0 max=1 step=1"/>
 			<var label="use_ao_mapping"        type="RENDERER" context="CURRENT" component="use_ao_mapping" 
-				def="min=0 max=1 step=1"/>
-			<var label="use_height_mapping"    type="RENDERER" context="CURRENT" component="use_height_mapping" 
 				def="min=0 max=1 step=1"/>
 			<var label="use_normal_mapping"    type="RENDERER" context="CURRENT" component="use_normal_mapping" 
 				def="min=0 max=1 step=1"/>
