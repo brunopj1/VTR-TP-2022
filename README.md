@@ -2,8 +2,6 @@
 
 ## Importante
 
-- Colocar a tesselacao a zero quando nao se ve o triangulo (talvez funcione com VFC de AABB's)
-
 - Blending de texturas (altura / e no mesmo)
 
 - Adaptar o blending de texturas e triplanar blend para funcionar com os materiais

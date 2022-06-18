@@ -52,6 +52,8 @@ bool isVisibleAABB(vec3 bmin, vec3 bmax) {
 	return (a >= 0.0);
 }
 
+// Calculo de tesselacao
+
 float calculateTes(vec4 pos0, vec4 pos1) {
 	// Calcular o centro e raio da esfera
 	float radius = length(vec3(pos0 - pos1)) * 0.5;
