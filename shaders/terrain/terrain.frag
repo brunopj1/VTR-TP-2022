@@ -24,6 +24,7 @@ uniform int use_roughness_mapping;
 
 in Data {
 	vec4 position;
+	vec3 normal_world;
 	vec3 normal;
 	vec3 tangent;
 	vec3 bitangent;
@@ -95,6 +96,9 @@ vec4 getTextureByHight() {
 // Main
 
 void main() {
+	// Calculate the slope
+	float slope = DataIn.normal_world.y;
+
 	// Normalize the data
 	vec2 coord = DataIn.texCoord * Texture_Freq;
 	vec3 normal = normalize(DataIn.normal);

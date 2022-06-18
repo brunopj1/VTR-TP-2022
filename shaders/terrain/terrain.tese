@@ -31,6 +31,7 @@ in Data {
 
 out Data {
 	vec4 position;
+	vec3 normal_world;
 	vec3 normal;
 	vec3 tangent;
 	vec3 bitangent;
@@ -148,12 +149,12 @@ void main() {
 	vec3 dirX = R - L;
 	vec3 dirZ = D - U;
 
-	vec3 normal_world = normalize(cross(dirZ, dirX));
-	DataOut.normal = normalize(m_normal * normal_world);
+	DataOut.normal_world = normalize(cross(dirZ, dirX));
+	DataOut.normal = normalize(m_normal * DataOut.normal_world);
 
 	// Tangent + Bitangent
 	vec3 tangent_world = normalize(dirX);
 	DataOut.tangent = normalize(m_normal * tangent_world);
-	vec3 bitangent_world = normalize(cross(normal_world, tangent_world));
+	vec3 bitangent_world = normalize(cross(DataOut.normal_world, tangent_world));
 	DataOut.bitangent = normalize(m_normal * bitangent_world);
 }
