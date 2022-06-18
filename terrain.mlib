@@ -10,19 +10,19 @@
 
 	<shaders>
 
-		<shader name="skybox"				ps = "shaders/skybox.frag"
-											vs = "shaders/skybox.vert" />
+		<shader name="skybox"				ps = "shaders/skybox/skybox.frag"
+											vs = "shaders/skybox/skybox.vert" />
 
-		<shader name="terrain" 				ps = "shaders/terrain.frag"
-											tc = "shaders/terrain.tesc"
-											te = "shaders/terrain.tese"
-											vs = "shaders/terrain.vert" />
+		<shader name="terrain" 				ps = "shaders/terrain/terrain.frag"
+											tc = "shaders/terrain/terrain.tesc"
+											te = "shaders/terrain/terrain.tese"
+											vs = "shaders/terrain/terrain.vert" />
 											
-		<shader name="terrain_normals"		ps = "shaders/terrain_normals.frag"
-											gs = "shaders/terrain_normals.geom"
-											tc = "shaders/terrain_normals.tesc"
-											te = "shaders/terrain_normals.tese"
-											vs = "shaders/terrain_normals.vert" />
+		<shader name="terrain_normals"		ps = "shaders/terrain_normals/terrain_normals.frag"
+											gs = "shaders/terrain_normals/terrain_normals.geom"
+											tc = "shaders/terrain_normals/terrain_normals.tesc"
+											te = "shaders/terrain_normals/terrain_normals.tese"
+											vs = "shaders/terrain_normals/terrain_normals.vert" />
 											
 	</shaders>
 
