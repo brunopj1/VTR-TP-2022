@@ -114,7 +114,7 @@
 					         type="CAMERA" context="CURRENT" 
 							 component="NORMALIZED_UP"  />
 
-					<!-- Terreno -->
+					<!-- Terreno Gerais -->
 
 					<valueof uniform="Terrain_Length" 		
 							 type="RENDERER" context="CURRENT" 
@@ -128,6 +128,12 @@
 							 type="RENDERER" context="CURRENT" 
 							 component="Terrain_Chunks"  />
 
+					<valueof uniform="Pixels_Per_Tri" 		
+					         type="RENDERER" context="CURRENT" 
+							 component="Pixels_Per_Tri"  />
+
+					<!-- Geração de Terreno -->
+
 					<valueof uniform="Heightmap_Freq" 		
 							 type="RENDERER" context="CURRENT" 
 							 component="Heightmap_Freq"  />
@@ -136,9 +142,49 @@
 							 type="RENDERER" context="CURRENT" 
 							 component="Texture_Freq"  />
 
-					<valueof uniform="Pixels_Per_Tri" 		
-					         type="RENDERER" context="CURRENT" 
-							 component="Pixels_Per_Tri"  />
+					<valueof uniform="Noise_Exp" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Noise_Exp"  />
+
+					<valueof uniform="Noise_1_Freq" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Noise_1_Freq"  />
+
+					<valueof uniform="Noise_1_Weight" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Noise_1_Weight"  />
+
+					<valueof uniform="Noise_2_Freq" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Noise_2_Freq"  />
+
+					<valueof uniform="Noise_2_Weight" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Noise_2_Weight"  />
+
+					<valueof uniform="Noise_3_Freq" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Noise_3_Freq"  />
+
+					<valueof uniform="Noise_3_Weight" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Noise_3_Weight"  />
+
+					<valueof uniform="Noise_4_Freq" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Noise_4_Freq"  />
+
+					<valueof uniform="Noise_4_Weight" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Noise_4_Weight"  />
+
+					<valueof uniform="Noise_5_Freq" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Noise_5_Freq"  />
+
+					<valueof uniform="Noise_5_Weight" 		
+							 type="RENDERER" context="CURRENT" 
+							 component="Noise_5_Weight"  />
 
 					<!-- Texturas -->
 

@@ -9,6 +9,20 @@ uniform	mat3 m_normal;
 uniform float Terrain_Length;
 uniform float Terrain_Height;
 uniform float Heightmap_Freq;
+uniform float Noise_Exp;
+
+uniform float Noise_1_Freq;
+uniform float Noise_1_Weight;
+uniform float Noise_2_Freq;
+uniform float Noise_2_Weight;
+uniform float Noise_3_Freq;
+uniform float Noise_3_Weight;
+uniform float Noise_4_Freq;
+uniform float Noise_4_Weight;
+uniform float Noise_5_Freq;
+uniform float Noise_5_Weight;
+
+float total_weight = Noise_1_Weight + Noise_2_Weight + Noise_3_Weight + Noise_4_Weight + Noise_5_Weight;
 
 in Data {
 	vec4 pos;
@@ -82,33 +96,20 @@ float voronoiNoise(vec2 point) {
 
 // Noise
 
-float getNoise_Mountains(vec2 pos) {
+float getNoise(vec2 pos) {
 	float v = 0;
-	v += 10 * voronoiNoise(pos);
-
-	pos *= 2;
-	v += 5 * voronoiNoise(pos);
-
-	pos *= 2;
-	v += 2 * voronoiNoise(pos);
-
-	pos *= 2;
-	v += 1 * gradientNoise(pos);
-
-	pos *= 2;
-	v += 1 * gradientNoise(pos);
-
+	v += Noise_1_Weight * voronoiNoise(pos * Noise_1_Freq);
+	v += Noise_2_Weight * voronoiNoise(pos * Noise_2_Freq);
+	v += Noise_3_Weight * voronoiNoise(pos * Noise_3_Freq);
+	v += Noise_4_Weight * gradientNoise(pos * Noise_4_Freq);
+	v += Noise_5_Weight * gradientNoise(pos * Noise_5_Freq);
 	// Dividir pela soma dos pesos
 	// Aplicar um expoente para reduzir a elevação fora dos picos
-	return pow(v / 19, 4);
-}
-
-float getNoise_Plains(vec2 pos) {
-	return gradientNoise(pos * 4);
+	return pow(v / (total_weight), Noise_Exp);
 }
 
 float getHeight(vec2 pos) {
-	float noise = getNoise_Mountains(pos);
+	float noise = getNoise(pos);
 	return noise * Terrain_Height;
 }
 
