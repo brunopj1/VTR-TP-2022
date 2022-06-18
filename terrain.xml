@@ -25,13 +25,13 @@
 			<attribute name="Noise_3_Weight"     	data="FLOAT" type="RENDERER" value=5 />
 			<attribute name="Noise_4_Freq"          data="FLOAT" type="RENDERER" value=8 />
 			<attribute name="Noise_4_Weight"     	data="FLOAT" type="RENDERER" value=2 />
-			<attribute name="Noise_5_Freq"          data="FLOAT" type="RENDERER" value=16 />
-			<attribute name="Noise_5_Weight"     	data="FLOAT" type="RENDERER" value=1 />
+			<attribute name="Noise_5_Freq"          data="FLOAT" type="RENDERER" value=32 />
+			<attribute name="Noise_5_Weight"     	data="FLOAT" type="RENDERER" value=0.5 />
 			<!-- Settings dos Materiais -->
-			<attribute name="use_specular_light"    data="INT"   type="RENDERER" value=0 />
-			<attribute name="use_ao_mapping"        data="INT"   type="RENDERER" value=0 />
-			<attribute name="use_normal_mapping"    data="INT"   type="RENDERER" value=0 />
-			<attribute name="use_roughness_mapping" data="INT"   type="RENDERER" value=0 />
+			<attribute name="use_specular_light"    data="INT"   type="RENDERER" value=1 />
+			<attribute name="use_ao_mapping"        data="INT"   type="RENDERER" value=1 />
+			<attribute name="use_normal_mapping"    data="INT"   type="RENDERER" value=1 />
+			<attribute name="use_roughness_mapping" data="INT"   type="RENDERER" value=1 />
 		</attributes>
 
 		<scenes>

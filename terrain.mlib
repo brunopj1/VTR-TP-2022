@@ -1,10 +1,10 @@
 <?xml version="1.0" ?>
 <materialLib name="Terrain">
 	<textures>
-		<texture name="tex_grass_albedo"    filename="./materials/metal/albedo.png"    mipmap=true />
-		<texture name="tex_grass_ao"        filename="./materials/metal/ao.png"        mipmap=true />
-		<texture name="tex_grass_normal"    filename="./materials/metal/normal.png"    mipmap=true />
-		<texture name="tex_grass_roughness" filename="./materials/metal/roughness.png" mipmap=true />
+		<texture name="tex_grass_albedo"    filename="./materials/grass/albedo.png"    mipmap=true />
+		<texture name="tex_grass_ao"        filename="./materials/grass/ao.png"        mipmap=true />
+		<texture name="tex_grass_normal"    filename="./materials/grass/normal.png"    mipmap=true />
+		<texture name="tex_grass_roughness" filename="./materials/grass/roughness.png" mipmap=true />
 
 		<texture name="tex_dirt_albedo"     filename="./materials/dirt/albedo.png"     mipmap=true />
 		<texture name="tex_dirt_ao"         filename="./materials/dirt/ao.png"         mipmap=true />
@@ -249,10 +249,10 @@
 				<texture name="tex_grass_ao"        UNIT=1 />
 				<texture name="tex_grass_normal"    UNIT=2 />
 				<texture name="tex_grass_roughness" UNIT=3 />
-				<texture name="tex_grass_albedo"    UNIT=4 />
-				<texture name="tex_grass_ao"        UNIT=5 />
-				<texture name="tex_grass_normal"    UNIT=6 />
-				<texture name="tex_grass_roughness" UNIT=7 />
+				<texture name="tex_dirt_albedo"    UNIT=4 />
+				<texture name="tex_dirt_ao"        UNIT=5 />
+				<texture name="tex_dirt_normal"    UNIT=6 />
+				<texture name="tex_dirt_roughness" UNIT=7 />
 			</textures>
 		</material>
 		
@@ -433,10 +433,10 @@
 				<texture name="tex_grass_ao"        UNIT=1 />
 				<texture name="tex_grass_normal"    UNIT=2 />
 				<texture name="tex_grass_roughness" UNIT=3 />
-				<texture name="tex_grass_albedo"    UNIT=4 />
-				<texture name="tex_grass_ao"        UNIT=5 />
-				<texture name="tex_grass_normal"    UNIT=6 />
-				<texture name="tex_grass_roughness" UNIT=7 />
+				<texture name="tex_dirt_albedo"    UNIT=4 />
+				<texture name="tex_dirt_ao"        UNIT=5 />
+				<texture name="tex_dirt_normal"    UNIT=6 />
+				<texture name="tex_dirt_roughness" UNIT=7 />
 			</textures>
 		</material>
 
