@@ -76,7 +76,7 @@ void main() {
 	vec3 eye = normalize(vec3(- m_view * DataIn.position));
 
 	// Calculate the slope
-	float slope = 1 - DataIn.normal_world.y + 0.4;
+	float slope = clamp(1 - 2 * pow(DataIn.normal_world.y, 2) + 0.5, 0, 1);
 
 	// Normal Mapping
 	if (use_normal_mapping > 0) {
