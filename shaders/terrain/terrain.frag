@@ -57,7 +57,7 @@ vec4 getTriPlanarColor(sampler2D tex, vec3 coord, vec3 blend) {
 // Get texture
 
 vec4 getTexture(sampler2D tex_grass, sampler2D tex_dirt, vec3 coord, vec3 blend, float f) {
-	vec4 color_grass = getTriPlanarColor(tex_grass, coord, blend);
+	vec4 color_grass = texture(tex_grass, coord.xz);
 	vec4 color_dirt = getTriPlanarColor(tex_dirt, coord, blend);
 	return mix(color_grass, color_dirt, f);
 }
