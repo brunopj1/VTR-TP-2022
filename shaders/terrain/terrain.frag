@@ -36,41 +36,73 @@ in Data {
 
 out vec4 colorOut;
 
+// Texture Tilling Fix
+
+vec4 hash4( vec2 p ) { 
+	return fract(sin(
+		vec4(
+			1.0+dot(p,vec2(37.0,17.0)), 
+			2.0+dot(p,vec2(11.0,47.0)),
+			3.0+dot(p,vec2(41.0,29.0)),
+			4.0+dot(p,vec2(23.0,31.0))
+		)) * 103.0);
+}
+
+void getTextureNoTileCoords(vec2 coord, out vec2[4] uv, out vec2[4] ddx, out vec2[4] ddy, out vec2 blend) {
+	vec2 iuv = floor( coord );
+    vec2 fuv = fract( coord );
+   
+    // generate per-tile transform
+    vec4 ofa = hash4( iuv + vec2(0.0,0.0) );
+    vec4 ofb = hash4( iuv + vec2(1.0,0.0) );
+    vec4 ofc = hash4( iuv + vec2(0.0,1.0) );
+    vec4 ofd = hash4( iuv + vec2(1.0,1.0) );
+
+    vec2 _ddx = dFdx( coord );
+    vec2 _ddy = dFdy( coord );
+
+    // transform per-tile uvs
+    ofa.zw = sign(ofa.zw-0.5);
+    ofb.zw = sign(ofb.zw-0.5);
+    ofc.zw = sign(ofc.zw-0.5);
+    ofd.zw = sign(ofd.zw-0.5);
+    
+    // uv's, and derivarives (for correct mipmapping)
+    uv[0] = coord * ofa.zw + ofa.xy; ddx[0] = _ddx * ofa.zw; ddy[0] = _ddy * ofa.zw;
+    uv[1] = coord * ofb.zw + ofb.xy; ddx[1] = _ddx * ofb.zw; ddy[1] = _ddy * ofb.zw;
+    uv[2] = coord * ofc.zw + ofc.xy; ddx[2] = _ddx * ofc.zw; ddy[2] = _ddy * ofc.zw;
+    uv[3] = coord * ofd.zw + ofd.xy; ddx[3] = _ddx * ofd.zw; ddy[3] = _ddy * ofd.zw;
+        
+    // fetch and blend
+    blend = smoothstep(0.25,0.75,fuv);
+}
+
+vec4 textureNoTile(sampler2D tex, vec2[4] uv, vec2[4] ddx, vec2[4] ddy, vec2 blend) {
+    return mix( mix( textureGrad( tex, uv[0], ddx[0], ddy[0] ), 
+                     textureGrad( tex, uv[1], ddx[1], ddy[1] ), blend.x ), 
+                mix( textureGrad( tex, uv[2], ddx[2], ddy[2] ),
+                     textureGrad( tex, uv[3], ddx[3], ddy[3] ), blend.x), blend.y );
+}
+
 // Get texture
 
-#define TEX_ALBEDO    0
-#define TEX_AO        1
-#define TEX_NORMAL    2
-#define TEX_ROUGHNESS 3
-
-vec4 getTexture(int type, vec2 coord, float f) {
-	vec4 color1, color2;
-	switch (type) {
-		case TEX_ALBEDO:
-			color1 = texture(tex_grass_albedo, coord);
-			color2 = texture(tex_dirt_albedo, coord);
-			break;
-		case TEX_AO:
-			color1 = texture(tex_grass_ao, coord);
-			color2 = texture(tex_dirt_ao, coord);
-			break;
-		case TEX_NORMAL:
-			color1 = texture(tex_grass_normal, coord);
-			color2 = texture(tex_dirt_normal, coord);
-			break;
-		case TEX_ROUGHNESS:
-			color1 = texture(tex_grass_roughness, coord);
-			color2 = texture(tex_dirt_roughness, coord);
-			break;
-	}
-	return mix(color1, color2, f);
+vec4 getTexture(sampler2D tex_grass, sampler2D tex_dirt,          // Textures to use
+                vec2[4] uv, vec2[4] ddx, vec2[4] ddy, vec2 blend, // Texture no tilling
+				float f) {                                        // Texture blending
+	vec4 color_grass = textureNoTile(tex_grass, uv, ddx, ddy, blend); // texture(tex_grass, coord);
+	vec4 color_dirt = textureNoTile(tex_dirt, uv, ddx, ddy, blend);// texture(tex_dirt, coord);
+	return mix(color_grass, color_dirt, f);
 }
 
 // Main
 
 void main() {
-	// Normalize the data
+	// Tex coord
+	vec2[4] uv, ddx, ddy; vec2 blend;
 	vec2 coord = DataIn.texCoord * Texture_Freq;
+	getTextureNoTileCoords(coord, uv, ddx, ddy, blend);
+
+	// Normalize the data
 	vec3 normal = normalize(DataIn.normal);
 	vec3 light_dir = normalize(vec3(m_view * -l_dir));
 	vec3 eye = normalize(vec3(- m_view * DataIn.position));
@@ -81,7 +113,7 @@ void main() {
 	// Normal Mapping
 	if (use_normal_mapping > 0) {
 		mat3 tbn = mat3(DataIn.tangent, DataIn.bitangent, DataIn.normal);
-		vec4 normal_tex = getTexture(TEX_NORMAL, coord, slope);
+		vec4 normal_tex = getTexture(tex_grass_normal, tex_dirt_normal, uv, ddx, ddy, blend, slope);
 		normal = normalize(vec3(normal_tex * 2.0 - 1.0));
 		normal = tbn * normal;
 	}
@@ -91,7 +123,7 @@ void main() {
 
 	// Ambient Occlusion
 	if (use_ao_mapping > 0) {
-		vec4 ao = getTexture(TEX_AO, coord, slope);
+		vec4 ao = getTexture(tex_grass_ao, tex_dirt_ao, uv, ddx, ddy, blend, slope);
 		intensity *= ao.r;
 	}
 
@@ -103,13 +135,13 @@ void main() {
 		specular = l_color * specIntensity;
 		// Roughness
 		if (use_roughness_mapping > 0) {
-			vec4 roughness = vec4(1) - getTexture(TEX_ROUGHNESS, coord, slope);
+			vec4 roughness = vec4(1) - getTexture(tex_grass_roughness, tex_dirt_roughness, uv, ddx, ddy, blend, slope);
 			specular *= roughness.r;
 		}
 	}
 
 	// Albedo / Diffuse
-	vec4 albedo = getTexture(TEX_ALBEDO, coord, slope);
+	vec4 albedo = getTexture(tex_grass_albedo, tex_dirt_albedo, uv, ddx, ddy, blend, slope);
 
 	// Diffuse + Ambient
 	vec4 diffuse = albedo * max(l_color * intensity, l_ambient);
