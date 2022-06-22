@@ -17,7 +17,7 @@
 		<shader name="skybox"				ps = "shaders/skybox/skybox.frag"
 											vs = "shaders/skybox/skybox.vert" />
 
-		<shader name="terrain" 				ps = "shaders/terrain/terrain.frag"
+		<shader name="terrain-triplanar" 	ps = "shaders/terrain/terrain-triplanar.frag"
 											tc = "shaders/terrain/terrain.tesc"
 											te = "shaders/terrain/terrain.tese"
 											vs = "shaders/terrain/terrain.vert" />
@@ -72,8 +72,8 @@
 			</textures>
 		</material>
 
-		<material name="terrain">
-			<shader name="terrain">
+		<material name="terrain-triplanar">
+			<shader name="terrain-triplanar">
 				<values>
 
 					<!-- Cena + Viewport -->

@@ -98,7 +98,7 @@
 					<light name="Sun" />
 				</lights>
 				<materialMaps>
-					<map fromMaterial="*" toMaterial="terrain" toLibrary="Terrain" />
+					<map fromMaterial="*" toMaterial="terrain-triplanar" toLibrary="Terrain" />
 				</materialMaps>
 			</pass>
 			<!--pass class="default" name="show normals">
