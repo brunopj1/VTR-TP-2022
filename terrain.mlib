@@ -22,7 +22,7 @@
 											te = "shaders/terrain/terrain.tese"
 											vs = "shaders/terrain/terrain.vert" />
 
-		<shader name="terrain-no-tilling" 	ps = "shaders/terrain/terrain-no-tilling.frag"
+		<shader name="terrain-no-tiling" 	ps = "shaders/terrain/terrain-no-tiling.frag"
 											tc = "shaders/terrain/terrain.tesc"
 											te = "shaders/terrain/terrain.tese"
 											vs = "shaders/terrain/terrain.vert" />
@@ -261,8 +261,8 @@
 			</textures>
 		</material>
 		
-		<material name="terrain-no-tilling">
-			<shader name="terrain-no-tilling">
+		<material name="terrain-no-tiling">
+			<shader name="terrain-no-tiling">
 				<values>
 
 					<!-- Cena + Viewport -->
