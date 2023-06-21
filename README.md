@@ -2,18 +2,14 @@
 
 ## Importante
 
-- Colocar a tesselacao a zero quando nao se ve o triangulo
-
-- Corrigir as normais (utilizar um offset proporcional à tesselacao)
-
 - Blending de texturas (altura / e no mesmo)
 
-- Adicionar luz especular
-
-- Utilizar normal maps e roughness maps (e talvez bump maps)
+- Adaptar o blending de texturas e triplanar blend para funcionar com os materiais
 
 ## Se tivermos tempo
 
 - Tentar melhorar o triplanar mapping
+
+- Utilizar parallax mapping com a bump map do material
 
 - Adicionar um plano de água

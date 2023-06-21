@@ -1,0 +1,176 @@
+<?xml version="1.0" ?>
+<project name="Terrain - Texture Tiling Fix" >
+	<assets>
+		<constants>
+			<constant name="Terrain_Length" value=2500 />
+			<constant name="Terrain_Chunks" value=15/>
+			<constant name="Terrain_Height" value=2000/>
+		</constants>
+		
+		<attributes>
+			<!-- Settings Gerais do Terreno -->
+			<attribute name="Terrain_Length"        data="FLOAT" type="RENDERER" value=Terrain_Length />
+			<attribute name="Terrain_Chunks"        data="INT"   type="RENDERER" value=Terrain_Chunks />
+			<attribute name="Terrain_Height"        data="FLOAT" type="RENDERER" value=Terrain_Height />
+			<attribute name="Pixels_Per_Tri"        data="FLOAT" type="RENDERER" value=5 />
+			<!-- Settings do Gerador de Terreno -->
+			<attribute name="Heightmap_Freq"        data="FLOAT" type="RENDERER" value=1.5 />
+			<attribute name="Texture_Freq"          data="FLOAT" type="RENDERER" value=25 />
+			<attribute name="Noise_Exp"             data="FLOAT" type="RENDERER" value=4 />
+			<attribute name="Noise_1_Freq"          data="FLOAT" type="RENDERER" value=1 />
+			<attribute name="Noise_1_Weight"     	data="FLOAT" type="RENDERER" value=10 />
+			<attribute name="Noise_2_Freq"          data="FLOAT" type="RENDERER" value=2 />
+			<attribute name="Noise_2_Weight"     	data="FLOAT" type="RENDERER" value=7 />
+			<attribute name="Noise_3_Freq"          data="FLOAT" type="RENDERER" value=4 />
+			<attribute name="Noise_3_Weight"     	data="FLOAT" type="RENDERER" value=5 />
+			<attribute name="Noise_4_Freq"          data="FLOAT" type="RENDERER" value=8 />
+			<attribute name="Noise_4_Weight"     	data="FLOAT" type="RENDERER" value=2 />
+			<attribute name="Noise_5_Freq"          data="FLOAT" type="RENDERER" value=32 />
+			<attribute name="Noise_5_Weight"     	data="FLOAT" type="RENDERER" value=0.5 />
+			<!-- Settings dos Materiais -->
+			<attribute name="use_specular_light"    data="INT"   type="RENDERER" value=1 />
+			<attribute name="use_ao_mapping"        data="INT"   type="RENDERER" value=1 />
+			<attribute name="use_normal_mapping"    data="INT"   type="RENDERER" value=1 />
+			<attribute name="use_roughness_mapping" data="INT"   type="RENDERER" value=1 />
+		</attributes>
+
+		<scenes>
+			<scene name="Scene">
+				<geometry name="Grid" type="GRID" LENGTH=1  DIVISIONS=Terrain_Chunks />
+			</scene>
+			<scene name="Skybox">
+				<file name="./cubemap/cube.obj" />
+			</scene>
+		</scenes>
+		
+		<viewports>
+			<viewport name="MainViewport">
+				<CLEAR_COLOR r="1.0" g="1.0" b="1.0" />
+			</viewport>
+		</viewports>
+		
+		<cameras>
+			<camera name="MainCamera" >
+				<viewport name="MainViewport" />
+				<TYPE value="PERSPECTIVE"/>
+				<FOV value=60/>
+				<NEAR value= 0.5/>
+				<FAR value= 5000/>
+                <POSITION x=0 y=800 z=0 w=1 />
+                <VIEW x=0.25 y=-0.33 z=-0.91 />
+				<LOOK_AT_POINT x=-156 y=52 z=291/>
+ 			</camera>
+		</cameras>
+		
+		<lights>
+			<light name="Sun">
+				<DIRECTION x=1 y=-5 z=8 />
+			</light>
+		</lights>
+		
+		<materialLibs>
+			<materialLib filename="terrain.mlib" />
+		</materialLibs>
+	</assets>
+	
+	<pipelines>
+		<pipeline name="main" default="true">
+			<pass name="skybox pass">
+				<scenes>
+					<scene name="Skybox" />
+				</scenes>
+				<camera name="MainCamera" />
+				<injectionMaps>
+					<map toMaterial="*">
+						<state name="Cull_Front" fromLibrary="Terrain" />
+						<shader fromMaterial="skybox" fromLibrary="Terrain" />
+					</map>
+				</injectionMaps>
+			</pass>
+			<pass class="default" name="terrain pass">
+				<COLOR_CLEAR value=false />
+				<DEPTH_CLEAR value=false />
+				<scenes>
+					<scene name="Scene" />
+				</scenes>
+				<camera name="MainCamera" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<materialMaps>
+					<map fromMaterial="*" toMaterial="terrain-no-tiling" toLibrary="Terrain" />
+				</materialMaps>
+			</pass>
+			<!--pass class="default" name="show normals">
+				<COLOR_CLEAR value=false />
+				<DEPTH_CLEAR value=false />
+				<scenes>
+					<scene name="Scene" />
+				</scenes>
+				<camera name="MainCamera" />
+				<lights>
+					<light name="Sun" />
+				</lights>
+				<materialMaps>
+					<map fromMaterial="*" toMaterial="terrain_normals" toLibrary="Terrain" />
+				</materialMaps>
+			</pass-->
+		</pipeline>
+
+	</pipelines>
+
+	<interface>
+		<!-- Gerais -->
+		<window label="General Settings">
+			<var label="Pixels_Per_Tri"        type="RENDERER" context="CURRENT" component="Pixels_Per_Tri" 
+				def="min=1 max=50 step=0.1"/>
+			<var label="Terrain_Length"        type="RENDERER" context="CURRENT" component="Terrain_Length" 
+				def="min=500 max=10000 step=0.1"/>
+			<var label="Terrain_Height"        type="RENDERER" context="CURRENT" component="Terrain_Height" 
+				def="min=0 max=5000 step=0.1"/>
+		</window>
+		<!-- Geração de Terreno -->
+		<window label="Terrain Generation">
+			<var label="Heightmap_Freq"        type="RENDERER" context="CURRENT" component="Heightmap_Freq" 
+				def="min=0.01 max=20 step=0.01"/>
+			<var label="Texture_Freq"          type="RENDERER" context="CURRENT" component="Texture_Freq" 
+				def="min=0.01 max=50 step=0.01"/>
+
+			<var label="Noise_Exp"             type="RENDERER" context="CURRENT" component="Noise_Exp" 
+				def="min=0.01 max=32 step=0.01"/>
+
+			<var label="Noise_1_Freq"          type="RENDERER" context="CURRENT" component="Noise_1_Freq" 
+				def="min=0.01 max=8 step=0.01"/>
+			<var label="Noise_2_Freq"          type="RENDERER" context="CURRENT" component="Noise_2_Freq" 
+				def="min=0.01 max=8 step=0.01"/>
+			<var label="Noise_3_Freq"          type="RENDERER" context="CURRENT" component="Noise_3_Freq" 
+				def="min=0.01 max=8 step=0.01"/>
+			<var label="Noise_4_Freq"          type="RENDERER" context="CURRENT" component="Noise_4_Freq" 
+				def="min=0.01 max=32 step=0.01"/>
+			<var label="Noise_5_Freq"          type="RENDERER" context="CURRENT" component="Noise_5_Freq" 
+				def="min=0.01 max=32 step=0.01"/>~
+
+			<var label="Noise_1_Weight"        type="RENDERER" context="CURRENT" component="Noise_1_Weight" 
+				def="min=0.01 max=32 step=0.01"/>
+			<var label="Noise_2_Weight"        type="RENDERER" context="CURRENT" component="Noise_2_Weight" 
+				def="min=0.01 max=32 step=0.01"/>
+			<var label="Noise_3_Weight"        type="RENDERER" context="CURRENT" component="Noise_3_Weight" 
+				def="min=0.01 max=32 step=0.01"/>
+			<var label="Noise_4_Weight"        type="RENDERER" context="CURRENT" component="Noise_4_Weight" 
+				def="min=0.01 max=32 step=0.01"/>
+			<var label="Noise_5_Weight"        type="RENDERER" context="CURRENT" component="Noise_5_Weight" 
+				def="min=0.01 max=32 step=0.01"/>
+		</window>
+		<!-- Materiais -->
+		<window label="Material Settings">
+			<var label="use_specular_light"    type="RENDERER" context="CURRENT" component="use_specular_light" 
+				def="min=0 max=1 step=1"/>
+			<var label="use_ao_mapping"        type="RENDERER" context="CURRENT" component="use_ao_mapping" 
+				def="min=0 max=1 step=1"/>
+			<var label="use_normal_mapping"    type="RENDERER" context="CURRENT" component="use_normal_mapping" 
+				def="min=0 max=1 step=1"/>
+			<var label="use_roughness_mapping" type="RENDERER" context="CURRENT" component="use_roughness_mapping" 
+				def="min=0 max=1 step=1"/>
+		</window>
+	</interface>
+</project>

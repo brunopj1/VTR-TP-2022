@@ -3,11 +3,26 @@
 layout(triangles, fractional_even_spacing, ccw) in;
 
 uniform	mat4 m_pvm;
+uniform	mat4 m_view;
 uniform	mat3 m_normal;
 
 uniform float Terrain_Length;
 uniform float Terrain_Height;
 uniform float Heightmap_Freq;
+uniform float Noise_Exp;
+
+uniform float Noise_1_Freq;
+uniform float Noise_1_Weight;
+uniform float Noise_2_Freq;
+uniform float Noise_2_Weight;
+uniform float Noise_3_Freq;
+uniform float Noise_3_Weight;
+uniform float Noise_4_Freq;
+uniform float Noise_4_Weight;
+uniform float Noise_5_Freq;
+uniform float Noise_5_Weight;
+
+float total_weight = Noise_1_Weight + Noise_2_Weight + Noise_3_Weight + Noise_4_Weight + Noise_5_Weight;
 
 in Data {
 	vec4 pos;
@@ -15,11 +30,10 @@ in Data {
 } DataIn[];
 
 out Data {
-	vec4 position;
 	vec3 normal;
-	vec3 normal_world;
+	vec3 tangent;
+	vec3 bitangent;
 	vec2 texCoord;
-	float heightNormalized;
 } DataOut;
 
 // Gradient Noise
@@ -81,27 +95,21 @@ float voronoiNoise(vec2 point) {
 
 // Noise
 
-float getNoise_Mountains(vec2 pos) {
-	float v = 0.5000 * voronoiNoise(pos);
-	pos *= 2;
-	v += 0.2500 * voronoiNoise(pos);
-	pos *= 2;
-	v += 0.1250 * voronoiNoise(pos);
-	pos *= 2;
-	v += 0.1250 * gradientNoise(pos);
-	pos *= 2;
-	v += 0.0625 * gradientNoise(pos);
-
-	return v;
+float getNoise(vec2 pos) {
+	float v = 0;
+	v += Noise_1_Weight * voronoiNoise(pos * Noise_1_Freq);
+	v += Noise_2_Weight * voronoiNoise(pos * Noise_2_Freq);
+	v += Noise_3_Weight * voronoiNoise(pos * Noise_3_Freq);
+	v += Noise_4_Weight * gradientNoise(pos * Noise_4_Freq);
+	v += Noise_5_Weight * gradientNoise(pos * Noise_5_Freq);
+	// Dividir pela soma dos pesos
+	// Aplicar um expoente para reduzir a elevação fora dos picos
+	return pow(v / (total_weight), Noise_Exp);
 }
 
-float getNoise_Plains(vec2 pos) {
-	return gradientNoise(pos * 4);
-}
-
-vec2 getHeight(vec2 pos) { // Returns { noise, height }
-	float noise = getNoise_Mountains(pos);
-	return vec2(noise, noise * Terrain_Height);
+float getHeight(vec2 pos) {
+	float noise = getNoise(pos);
+	return noise * Terrain_Height;
 }
 
 // Main
@@ -112,12 +120,11 @@ void main() {
 		DataIn[0].texCoord * gl_TessCoord.x +
 		DataIn[1].texCoord * gl_TessCoord.y +
 		DataIn[2].texCoord * gl_TessCoord.z;
-		
+
 	DataOut.texCoord = texCoord;
 
 	// Noise
-	vec2 noise = getHeight(texCoord * Heightmap_Freq);
-	DataOut.heightNormalized = noise.x;
+	float noise = getHeight(texCoord * Heightmap_Freq);
 
 	// Position
 	vec4 pos = 
@@ -125,23 +132,21 @@ void main() {
 		DataIn[1].pos * gl_TessCoord.y +
 		DataIn[2].pos * gl_TessCoord.z;
 
-	pos.y += noise.y;
-	DataOut.position = pos;
-	gl_Position = m_pvm * pos;
+	pos.y += noise;
+	gl_Position = pos;
 
 	// Normal
-	float offsetPos = 5;
-	float offsetTex = offsetPos / Terrain_Length;
-	
-	vec3 L = vec3(pos.x - offsetPos, getHeight((texCoord - vec2(offsetTex, 0)) * Heightmap_Freq).y,             pos.z);
-	vec3 R = vec3(pos.x + offsetPos, getHeight((texCoord + vec2(offsetTex, 0)) * Heightmap_Freq).y,             pos.z);
-	vec3 D = vec3(            pos.x, getHeight((texCoord - vec2(0, offsetTex)) * Heightmap_Freq).y, pos.z + offsetPos);
-	vec3 U = vec3(            pos.x, getHeight((texCoord + vec2(0, offsetTex)) * Heightmap_Freq).y, pos.z - offsetPos);
+	vec2 posL = pos.xz - vec2(1, 0); vec3 L = vec3(posL.x, getHeight(posL * 0.001 * Heightmap_Freq), posL.y);
+	vec2 posR = pos.xz + vec2(1, 0); vec3 R = vec3(posR.x, getHeight(posR * 0.001 * Heightmap_Freq), posR.y);
+	vec2 posD = pos.xz + vec2(0, 1); vec3 D = vec3(posD.x, getHeight(posD * 0.001 * Heightmap_Freq), posD.y);
+	vec2 posU = pos.xz - vec2(0, 1); vec3 U = vec3(posU.x, getHeight(posU * 0.001 * Heightmap_Freq), posU.y);
 
 	vec3 dirX = R - L;
 	vec3 dirZ = D - U;
 
-	DataOut.normal_world = normalize(cross(dirZ, dirX));
-	DataOut.normal = normalize(m_normal * DataOut.normal_world);
-}
+	DataOut.normal = normalize(cross(dirZ, dirX));
 
+	// Tangent + Bitangent
+	DataOut.tangent = normalize(dirX);
+	DataOut.bitangent = cross(DataOut.normal, DataOut.tangent);
+}
